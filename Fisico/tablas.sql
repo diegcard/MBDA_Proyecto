@@ -1,11 +1,22 @@
+/*----------Dominios----------*/
+/*
+Comentarios:
+Total de Tipos de datos creados: 6
+*/
 -- Tipos de datos
 CREATE DOMAIN TId AS CHAR(3);
 CREATE DOMAIN ECivil AS CHAR(1);
 CREATE DOMAIN Money AS NUMBER(20,2);
 CREATE DOMAIN tProd AS CHAR(1);
+CREATE DOMAIN Ecompra AS CHAR(1);
+CREATE DOMAIN Sex AS CHAR(1);
 
 /*----------Tablas----------*/
-
+/*
+Comentarios:
+Total de Tablas: 12
+Total de Atributos: 69
+*/
 -- Color Azul
 
 CREATE TABLE Personas(
@@ -32,7 +43,7 @@ CREATE TABLE Clientes(
 
 CREATE TABLE Empleados(
     idPersona NUMBER(11) NOT NULL,
-    sexo CHAR(1) NULL,
+    sexo Sex NULL,
     etadoCivil ECivil NOT NULL,
     cargo VARCHAR2(15) NOT NULL,
     salario Money NOT NULL
@@ -90,10 +101,39 @@ CREATE TABLE Accesorios(
     descripcion VARCHAR(50) NULL
 );
 
+-- Color Morado
 
+CREATE TABLE DetallesCompras(
+    idDetalleCompra VARCHAR2(10) NOT NULL,
+    idCompra VARCHAR2(20) NOT NULL,
+    idProducto VARCHAR2(10) NOT NULL,
+    cantidadComprada NUMBER(3) NOT NULL,
+    precioUnitario Money NOT NULL,
+    subtotal Money NOT NULL
 
+);
+CREATE TABLE Compras(
+    idCompra VARCHAR2(20) NOT NULL,
+    idProveedor VARCHAR2(10) NOT NULL,
+    idEmpleado NUMBER(11) NOT NULL,
+    fecha DATE NOT NULL,
+    totalCompra Money NOT NULL,
+    estadoCompra Ecompra NOT NULL,
+    descripcionCompra VARCHAR2 NULL
+);
 
+CREATE TABLE Proveedores(
+    idProveedor VARCHAR2(10) NOT NULL,
+    nombre VARCHAR2(50) NOT NULL,
+    direccion VARCHAR(20) NULL,
+    correoElectronico VARCHAR(50) NOT NULL,
+    informacionContacto VARCHAR(50) NULL
+):
 
+CREATE TABLE telefonosProveedores(
+    idProveedor VARCHAR2(10) NOT NULL,
+    telefono NUMBER(10) NOT NULL
+);
 
 /*----------XTablas----------*/
 DROP TABLE Personas CASCADE CONSTRAINTS;
@@ -106,9 +146,7 @@ DROP TABLE Productos CASCADE CONSTRAINTS;
 DROP TABLE Repuestos CASCADE CONSTRAINTS;
 DROP TABLE Motos CASCADE CONSTRAINTS;
 DROP TABLE Accesorios CASCADE CONSTRAINTS;
-
-
-
-
-
-
+DROP TABLE DetallesCompras CASCADE CONSTRAINTS;
+DROP TABLE Compras CASCADE CONSTRAINTS;
+DROP TABLE Proveedores CASCADE CONSTRAINTS;
+DROP TABLE telefonosProveedores CASCADE CONSTRAINTS;
