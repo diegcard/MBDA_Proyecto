@@ -107,7 +107,7 @@ CREATE TABLE DetallesCompras(
     idDetalleCompra VARCHAR2(10) NOT NULL,
     idCompra VARCHAR2(20) NOT NULL,
     idProducto VARCHAR2(10) NOT NULL,
-    cantidadComprada NUMBER(3) NOT NULL,
+    cantidad NUMBER(3) NOT NULL,
     precioUnitario Money NOT NULL,
     subtotal Money NOT NULL
 

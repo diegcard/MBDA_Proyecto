@@ -5,7 +5,7 @@ Comentarios:
 Total de llaves primarias: 12
 Total de llaves unicas: 4
 Total de llaves foraneas: 15
-Total de Checks: 
+Total de Checks: 10
 */
 /*----------Primary Keys----------*/--
 -- Color Azul
@@ -41,7 +41,6 @@ ALTER TABLE Proveedores ADD CONSTRAINT UK_Proveedores_correoElectronico UNIQUE (
 
 /*----------Cheks----------*/
 -- Color Azul
--- 4
 ALTER TABLE Personas ADD CONSTRAINT CK_Personas_identificacion CHECK (REGEXP_LIKE(identificacion, '^[0-9]+$'));
 ALTER TABLE Personas ADD CONSTRAINT CK_Personas_tipoIdentificacion CHECK (TId IN('C.C', 'T.I', 'C.E', 'P.P'));
 ALTER TABLE Personas ADD CONSTRAINT CK_Personas_Correo CHECK(correoElectronico LIKE '%@%');
@@ -49,14 +48,15 @@ ALTER TABLE Empleados ADD CONSTRAINT CK_Empleados_Sex CHECK(sexo IN('H', 'M', 'O
 ALTER TABLE Empleados ADD CONSTRAINT CK_Empleados_Ecivil CHECK(ECivil IN('S', 'C', 'V', 'D', 'U'));
 
 -- Color Verde
--- 1
 ALTER TABLE DetallesVentas ADD CONSTRAINT CK_DetallesVentas_cantidad CHECK(cantidad > 0 and REGEXP_LIKE(cantidad, '^[0-9]+$'))
 
 --Color Naranja
 ALTER TABLE Productos ADD CONSTRAINT CK_Productos_tipoProducto CHECK(tProd IN('R', 'M', 'A'));
 
 --Color Morado
-
+ALTER TABLE DetallesCompras ADD CONSTRAINT CK_DetallesCompras_cantidad CHECK(cantidad > 0 and REGEXP_LIKE(cantidad, '^[0-9]+$'));
+ALTER TABLE Compras ADD CONSTRAINT CK_Compras_Ecompra CHECK(Ecompra IN('P','A', 'R', 'E', 'C', 'F', 'T'));
+ALTER TABLE Proveedores ADD CONSTRAINT CK_Proveedores_Correo CHECK(correoElectronico LIKE '%@%');
 
 /*----------FOREIGN KEYS----------*/
 -- Color Azul
