@@ -98,8 +98,8 @@ VALUES ('A2', NULL);
 
 
 -- Ventas 
-INSERT INTO Ventas (idVenta, idEmpleado, idCliente, fechaVenta, horaVenta, totalVenta, descripcionVenta)
-VALUES ('1', 6, 1, '01-FEB-2023', TIMESTAMP '2023-02-01 10:00:00', 500000, 'Venta de moto');
+INSERT INTO Ventas (idVenta, idEmpleado, idCliente, descripcionVenta)
+VALUES ('1', 6, 1, 'Venta de moto');
 
 INSERT INTO Ventas (idVenta, idEmpleado, idCliente, fechaVenta, horaVenta, totalVenta, descripcionVenta)
 VALUES ('2', 7, 3, '13-FEB-2023', TIMESTAMP '2023-02-01 12:00:00', 300000, NULL);

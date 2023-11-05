@@ -33,7 +33,7 @@ CREATE TABLE Clientes(
 CREATE TABLE Empleados(
     idPersona NUMBER(11) NOT NULL,
     sexo CHAR(1) NULL,
-    etadoCivil CHAR(1) NOT NULL,
+    etadoCivil CHAR(1) NULL,
     cargo VARCHAR2(15) NOT NULL,
     salario NUMBER(20,2) NOT NULL
 );
@@ -42,12 +42,12 @@ CREATE TABLE Empleados(
 
 CREATE TABLE Ventas(
     idVenta VARCHAR2(20) NOT NULL,
-    idEmpleado NUMBER(11) NOT NULL,
-    idCliente NUMBER(11) NOT NULL,
+    idEmpleado NUMBER(11) NULL,
+    idCliente NUMBER(11) NULL,
     fechaVenta DATE NOT NULL,
     horaVenta TIMESTAMP NOT NULL,
-    totalVenta NUMBER(20,2) NOT NULL,
-    descripcionVenta VARCHAR2(50) NULL
+    totalVenta NUMBER(20,2) NULL,
+    descripcionVenta VARCHAR2(200) NULL
 );
 
 CREATE TABLE DetallesVentas(
@@ -56,7 +56,7 @@ CREATE TABLE DetallesVentas(
     idProducto VARCHAR2(10) NOT NULL,
     cantidad NUMBER(20) NOT NULL,
     precioUnitario NUMBER(20,2) NOT NULL,
-    precioTotal NUMBER(20,2) NOT NULL
+    precioTotal NUMBER(20,2) NULL
 );
 
 -- Color Naranja
@@ -71,23 +71,23 @@ CREATE TABLE Productos(
 
 CREATE TABLE Repuestos(
     idProducto VARCHAR2(10) NOT NULL,
-    tipo VARCHAR2(20) NOT NULL,
-    descripcion VARCHAR2(50) NULL
+    tipo VARCHAR2(20) NULL,
+    descripcion VARCHAR2(200) NULL
 );
 
 CREATE TABLE Motos(
     idProducto VARCHAR2(10) NOT NULL,
-    marca VARCHAR2(20) NOT NULL,
+    marca VARCHAR2(20) NULL,
     modelo VARCHAR2(20) NOT NULL,
-    anio DATE NOT NULL,
+    anio DATE NULL,
     color VARCHAR2(10) NOT NULL,
     cilindraje NUMBER(4) NOT NULL,
-    descripcion VARCHAR2(50) NULL
+    descripcion VARCHAR2(200) NULL
 );
 
 CREATE TABLE Accesorios(
     idProducto VARCHAR2(10) NOT NULL,
-    descripcion VARCHAR(50) NULL
+    descripcion VARCHAR(200) NULL
 );
 
 -- Color Morado
@@ -98,17 +98,17 @@ CREATE TABLE DetallesCompras(
     idProducto VARCHAR2(10) NOT NULL,
     cantidad NUMBER(3) NOT NULL,
     precioUnitario NUMBER(20,2) NOT NULL,
-    subtotal NUMBER(20,2) NOT NULL
-
+    subtotal NUMBER(20,2) NULL
 );
+
 CREATE TABLE Compras(
     idCompra VARCHAR2(20) NOT NULL,
-    idProveedor VARCHAR2(10) NOT NULL,
-    idEmpleado NUMBER(11) NOT NULL,
+    idProveedor VARCHAR2(10) NULL,
+    idEmpleado NUMBER(11) NULL,
     fecha DATE NOT NULL,
-    totalCompra NUMBER(20,2) NOT NULL,
+    totalCompra NUMBER(20,2) NULL,
     estadoCompra CHAR(1) NOT NULL,
-    descripcionCompra VARCHAR2(50) NULL
+    descripcionCompra VARCHAR2(200) NULL
 );
 
 CREATE TABLE Proveedores(
@@ -116,7 +116,7 @@ CREATE TABLE Proveedores(
     nombre VARCHAR2(50) NOT NULL,
     direccion VARCHAR(20) NULL,
     correoElectronico VARCHAR(50) NOT NULL,
-    informacionContacto VARCHAR(50) NULL
+    informacionContacto VARCHAR(200) NULL
 );
 
 CREATE TABLE telefonosProveedores(

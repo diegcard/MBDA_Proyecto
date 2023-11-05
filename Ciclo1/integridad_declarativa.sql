@@ -71,9 +71,9 @@ ALTER TABLE DetallesVentas ADD CONSTRAINT FK_DetallesVentas_idVenta FOREIGN KEY(
 ALTER TABLE DetallesVentas ADD CONSTRAINT FK_DetallesVentas_idProducto FOREIGN KEY(idProducto) REFERENCES Productos(idProducto);
 
 -- Color Naranja
-ALTER TABLE Repuestos ADD CONSTRAINT FK_Productos_id FOREIGN KEY(idProducto) REFERENCES Productos(idProducto);
-ALTER TABLE Motos ADD CONSTRAINT FK_Motos_id FOREIGN KEY(idProducto) REFERENCES Productos(idProducto);
-ALTER TABLE Accesorios ADD CONSTRAINT FK_Accesorios_id FOREIGN KEY(idProducto) REFERENCES Productos(idProducto);
+ALTER TABLE Repuestos ADD CONSTRAINT FK_Repuestos_Productos_id FOREIGN KEY(idProducto) REFERENCES Productos(idProducto);
+ALTER TABLE Motos ADD CONSTRAINT FK_Motos_Productos_id FOREIGN KEY(idProducto) REFERENCES Productos(idProducto);
+ALTER TABLE Accesorios ADD CONSTRAINT FK_Accesorios_Productos_id FOREIGN KEY(idProducto) REFERENCES Productos(idProducto);
 
 -- Color Morado
 ALTER TABLE telefonosProveedores ADD CONSTRAINT FK_telefonosProveedores_id FOREIGN KEY(idProveedor) REFERENCES Proveedores(idProveedor);
