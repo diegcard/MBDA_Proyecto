@@ -6,12 +6,35 @@
 /*-----Adicion-----*/
 
 -- La fecha y Hora se ponen automaticamente en la inserccion de datos
-CREATE OR REPLACE TRIGGER TR_Ventas_In_Be_Date
+CREATE OR REPLACE TRIGGER TR_Ventas_In_Be_Default
 BEFORE INSERT ON Ventas
 FOR EACH ROW
 BEGIN
   :NEW.fechaVenta := SYSDATE;  
   :NEW.horaVenta := CURRENT_TIMESTAMP;
+  :NEW.totalVenta := 0;
+END;
+/
+
+-- Calcula precioTotal automaticamente multiplicando el precioUnitario y la cantidad 
+CREATE OR REPLACE TRIGGER TR_DetallesVentas_totalVenta_BE_IN
+BEFORE INSERT ON DetallesVentas
+FOR EACH ROW
+DECLARE
+    total NUMBER(20,2) := :NEW.precioUnitario * :NEW.cantidad;
+BEGIN
+  :NEW.precioTotal := total;
+END;
+
+-- Calcula la venta total de todos los produtos de una venta
+CREATE OR REPLACE TRIGGER TR_DeatllesVentas_AF_IN_UP_DE_totalVenta
+AFTER INSERT OR UPDATE OR DELETE ON DetallesVentas
+BEGIN
+    UPDATE Ventas v
+    SET totalVenta = (SELECT SUM(d.precioTotal)
+                      FROM DetallesVentas d
+                      WHERE d.idVenta = v.idVenta)
+    WHERE v.idVenta IN (SELECT DISTINCT idVenta FROM DetallesVentas);
 END;
 /
 

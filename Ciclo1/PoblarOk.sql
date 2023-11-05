@@ -106,8 +106,8 @@ VALUES ('2', 7, 3, '13-FEB-2023', TIMESTAMP '2023-02-01 12:00:00', 300000, NULL)
 
 
 -- DetallesVentas
-INSERT INTO DetallesVentas (idDetalleVenta, idVenta, idProducto, cantidad, precioUnitario, precioTotal)
-VALUES ('1', '1', 'M1', 1, 500000, 500000);
+INSERT INTO DetallesVentas (idDetalleVenta, idVenta, idProducto, cantidad, precioUnitario)
+VALUES ('1', '1', 'M1', 1, 500000);
 
 INSERT INTO DetallesVentas (idDetalleVenta, idVenta, idProducto, cantidad, precioUnitario, precioTotal)
 VALUES ('2', '2', 'A1', 2, 50000, 100000);
