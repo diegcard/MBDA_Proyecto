@@ -41,7 +41,7 @@ CREATE TABLE Empleados(
 -- Color Verde
 
 CREATE TABLE Ventas(
-    idVenta VARCHAR2(20) NOT NULL,
+    idVenta NUMBER(20) NOT NULL,
     idEmpleado NUMBER(11) NULL,
     idCliente NUMBER(11) NULL,
     fechaVenta DATE NOT NULL,
@@ -51,8 +51,8 @@ CREATE TABLE Ventas(
 );
 
 CREATE TABLE DetallesVentas(
-    idDetalleVenta VARCHAR2(20) NOT NULL,
-    idVenta VARCHAR2(20) NOT NULL,
+    idDetalleVenta NUMBER(20) NOT NULL,
+    idVenta NUMBER(20) NOT NULL,
     idProducto VARCHAR2(10) NOT NULL,
     cantidad NUMBER(20) NOT NULL,
     precioUnitario NUMBER(20,2) NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE DetallesVentas(
 
 CREATE TABLE Productos(
     idProducto VARCHAR2(10) NOT NULL,
-    nombre VARCHAR2(20) NOT NULL,
+    nombre VARCHAR2(50) NOT NULL,
     precio NUMBER(20,2) NOT NULL,
     cantidadEnStock NUMBER(10) NOT NULL,
     tipoProducto CHAR(1) NOT NULL
@@ -93,8 +93,8 @@ CREATE TABLE Accesorios(
 -- Color Morado
 
 CREATE TABLE DetallesCompras(
-    idDetalleCompra VARCHAR2(10) NOT NULL,
-    idCompra VARCHAR2(20) NOT NULL,
+    idDetalleCompra NUMBER(10) NOT NULL,
+    idCompra NUMBER(20) NOT NULL,
     idProducto VARCHAR2(10) NOT NULL,
     cantidad NUMBER(3) NOT NULL,
     precioUnitario NUMBER(20,2) NOT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE DetallesCompras(
 );
 
 CREATE TABLE Compras(
-    idCompra VARCHAR2(20) NOT NULL,
+    idCompra NUMBER(20) NOT NULL,
     idProveedor VARCHAR2(10) NULL,
     idEmpleado NUMBER(11) NULL,
     fecha DATE NOT NULL,
