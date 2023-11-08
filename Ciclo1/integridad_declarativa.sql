@@ -48,13 +48,14 @@ ALTER TABLE Empleados ADD CONSTRAINT CK_Empleados_Sex CHECK(sexo IN('H', 'M', 'O
 ALTER TABLE Empleados ADD CONSTRAINT CK_Empleados_Ecivil CHECK(etadoCivil IN('S', 'C', 'V', 'D', 'U'));
 
 -- Color Verde
-ALTER TABLE DetallesVentas ADD CONSTRAINT CK_DetallesVentas_cantidad CHECK(cantidad > 0);
+-- ALTER TABLE DetallesVentas ADD CONSTRAINT CK_DetallesVentas_cantidad CHECK(cantidad > 0);
 
 --Color Naranja
 ALTER TABLE Productos ADD CONSTRAINT CK_Productos_tipoProducto CHECK(tipoProducto IN('R', 'M', 'A'));
+ALTER TABLE Productos ADD CONSTRAINT CK_Productos_precio CHECK(precio >= 0):
 
 --Color Morado
-ALTER TABLE DetallesCompras ADD CONSTRAINT CK_DetallesCompras_cantidad CHECK(cantidad > 0 and REGEXP_LIKE(cantidad, '^[0-9]+$'));
+-- ALTER TABLE DetallesCompras ADD CONSTRAINT CK_DetallesCompras_cantidad CHECK(cantidad > 0 and REGEXP_LIKE(cantidad, '^[0-9]+$'));
 ALTER TABLE Compras ADD CONSTRAINT CK_Compras_Ecompra CHECK(estadoCompra IN('P','A', 'R', 'E', 'C', 'F', 'T'));
 ALTER TABLE Proveedores ADD CONSTRAINT CK_Proveedores_Correo CHECK(correoElectronico LIKE '%@%');
 

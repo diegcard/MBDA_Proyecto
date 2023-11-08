@@ -80,7 +80,7 @@ CREATE TABLE Motos(
     marca VARCHAR2(20) NULL,
     modelo VARCHAR2(20) NOT NULL,
     anio DATE NULL,
-    color VARCHAR2(10) NOT NULL,
+    color VARCHAR2(100) NOT NULL,
     cilindraje NUMBER(4) NOT NULL,
     descripcion VARCHAR2(200) NULL
 );
@@ -114,7 +114,7 @@ CREATE TABLE Compras(
 CREATE TABLE Proveedores(
     idProveedor VARCHAR2(10) NOT NULL,
     nombre VARCHAR2(50) NOT NULL,
-    direccion VARCHAR(20) NULL,
+    direccion VARCHAR(100) NULL,
     correoElectronico VARCHAR(50) NOT NULL,
     informacionContacto VARCHAR(200) NULL
 );

@@ -26,6 +26,17 @@ BEGIN
 END;
 /
 
+-- Descontar cantidad automaticamente de la tabla productos de un articulo vendido
+CREATE OR REPLACE TRIGGER TR_DetallesVentas_cantidad_recontar
+AFTER INSERT ON DetallesVentas
+FOR EACH ROW
+BEGIN
+  UPDATE Productos P
+  SET P.cantidadEnStock = P.cantidadEnStock - :NEW.cantidad
+  WHERE P.idProducto = :NEW.idProducto;
+END;
+/
+
 -- En la tabla Ventas en el atributo totalventa se calcula, sumando todos los detalles ventas asociados a dicha factura
 CREATE OR REPLACE TRIGGER TR_DeatllesVentas_AF_IN_UP_DE_totalVenta
 AFTER INSERT OR UPDATE OR DELETE ON DetallesVentas
@@ -64,14 +75,16 @@ END;
 /*-----Eliminacion-----*/
 --Cuando se elimina una venta se eliminan los detallesVentas asociados con dicha venta
 --Eso esta implementado en las acciones
+
 /*---------------------------------Mantener Productos---------------------------------*/
 /*-----Adicion-----*/
 /*-----Modificacion-----*/
---El precio tiene que ser positivo
+--El precio tiene que ser positivo (Esto es una accion ya realizada)
 /*-----Eliminacion-----*/
 --Cuando se elimina un producto se eliminan las herencias asociados con dicho producto
 --Eso esta implementado en las acciones
---Cuando se elimina un poducto en detalles ventas se establece el id del producto como NULL
+--Cuando se elimina un producto en DetallesVentas se establece el id del producto como NULL
+
 /*---------------------------------Mantener Compras---------------------------------*/
 /*-----Adicion-----*/
 -- La fecha y Hora se ponen automaticamente en la inserccion de datos
@@ -107,27 +120,41 @@ BEGIN
 END;
 /
 
+-- Adicionar cantidad automaticamente de la tabla productos de un articulo Comprado
+CREATE OR REPLACE TRIGGER TR_DetallesCompras_cantidad_recontar
+AFTER INSERT ON DetallesCompras
+FOR EACH ROW
+BEGIN
+  UPDATE Productos P
+  SET P.cantidadEnStock = P.cantidadEnStock + :NEW.cantidad
+  WHERE P.idProducto = :NEW.idProducto;
+END;
+/
+
+
 /*-----Modificacion-----*/
 -- El unico Dato que se puede modificar en Compras es la descripcion y el estado 
 CREATE OR REPLACE TRIGGER TR_Compras_Ud_Be_Se
 BEFORE UPDATE ON Ventas
 FOR EACH ROW
 BEGIN
-  IF UPDATING('idVenta') OR UPDATING('fechaVenta') OR UPDATING('horaVenta') THEN
-    RAISE_APPLICATION_ERROR(-20001, 'No se permite modificar dichos atributos excepto.');
+  IF UPDATING('idCompra') OR UPDATING('fechaCompra') THEN
+    RAISE_APPLICATION_ERROR(-20003, 'No se permite modificar dichos atributos excepto.');
   END IF;
 END;
 /
 
--- El unico Dato que se puede modificar en detallesVentas es la descripcion 
+-- El unico Dato que se puede modificar en detallesCompras es la descripcion 
 CREATE OR REPLACE TRIGGER TR_DetallesVentas_Ud_Be_Se
 BEFORE UPDATE ON DetallesVentas
 FOR EACH ROW
 BEGIN
-  IF UPDATING('idDetalleVenta') OR UPDATING('idVenta') OR UPDATING('idProducto') THEN
-    RAISE_APPLICATION_ERROR(-20002, 'No se permite modificar los atributos.');
+  IF UPDATING('idDetalleCompra') OR UPDATING('idCompra') OR UPDATING('idProducto') THEN
+    RAISE_APPLICATION_ERROR(-20004, 'No se permite modificar los atributos.');
   END IF;
 END;
 /
 
 /*-----Eliminacion-----*/
+--Cuando se elimina una Compra se eliminan los detallesCompras asociadas a dicha Compra
+--Es una accion y ya esta implementada
