@@ -82,4 +82,3 @@ ALTER TABLE DetallesCompras ADD CONSTRAINT FK_DetallesCompras_idCompra FOREIGN K
 ALTER TABLE DetallesCompras ADD CONSTRAINT FK_DetallesCompras_idProducto FOREIGN KEY(idProducto) REFERENCES Productos(idProducto);
 ALTER TABLE Compras ADD CONSTRAINT FK_Compras_idProveedor FOREIGN KEY(idProveedor) REFERENCES Proveedores(idProveedor);
 ALTER TABLE Compras ADD CONSTRAINT FK_Compras_idEmpleado FOREIGN KEY(idEmpleado) REFERENCES Empleados(idPersona);
-

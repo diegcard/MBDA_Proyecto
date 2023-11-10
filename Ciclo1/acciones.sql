@@ -23,6 +23,7 @@ ALTER TABLE DetallesVentas ADD CONSTRAINT FK_DetallesVentas_idProducto FOREIGN K
 
 /*---------------------------------Mantener Productos---------------------------------*/
 /*XAcciones de referencia*/
+--ALTER TABLE Productos DROP
 ALTER TABLE Repuestos DROP CONSTRAINT FK_Repuestos_Productos_id;
 ALTER TABLE Motos DROP CONSTRAINT FK_Motos_Productos_id;
 ALTER TABLE Accesorios DROP CONSTRAINT FK_Accesorios_Productos_id;

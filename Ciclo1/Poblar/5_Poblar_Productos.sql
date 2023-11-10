@@ -27,3 +27,11 @@ INSERT INTO Productos (idProducto, nombre, precio, cantidadEnStock, tipoProducto
 VALUES ('A1', 'Casco', 50000, 0, 'A');
 INSERT INTO Productos (idProducto, nombre, precio, cantidadEnStock, tipoProducto)
 VALUES ('A2', 'Guantes', 30000, 0, 'A');
+
+--Pruebas
+
+INSERT INTO Productos (nombre, precio, cantidadEnStock, tipoProducto)
+VALUES ('Disco de freno', 200000, 0, 'R');
+
+INSERT INTO Productos (nombre, precio, cantidadEnStock, tipoProducto)
+VALUES ('Moto RX150', 12000000, 0, 'M');

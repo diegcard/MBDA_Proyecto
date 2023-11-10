@@ -7,7 +7,6 @@ Total de Atributos: 69
 -- Color Azul
 
 
-
 CREATE TABLE Personas(
     idPersona NUMBER(11) NOT NULL,
     nombre VARCHAR2(20) NOT NULL,
@@ -53,9 +52,9 @@ CREATE TABLE Ventas(
 CREATE TABLE DetallesVentas(
     idDetalleVenta NUMBER(20) NOT NULL,
     idVenta NUMBER(20) NOT NULL,
-    idProducto VARCHAR2(10) NOT NULL,
-    cantidad NUMBER(20) NOT NULL,
-    precioUnitario NUMBER(20,2) NOT NULL,
+    idProducto VARCHAR2(10) NULL,
+    cantidad NUMBER(20) NULL,
+    precioUnitario NUMBER(20,2) NULL,
     precioTotal NUMBER(20,2) NULL
 );
 
@@ -123,19 +122,3 @@ CREATE TABLE telefonosProveedores(
     idProveedor VARCHAR2(10) NOT NULL,
     telefono NUMBER(10) NOT NULL
 );
-
-/*----------XTablas----------*/
-DROP TABLE Personas CASCADE CONSTRAINTS;
-DROP TABLE Clientes CASCADE CONSTRAINTS;
-DROP TABLE Empleados CASCADE CONSTRAINTS;
-DROP TABLE telefonosPersona CASCADE CONSTRAINTS;
-DROP TABLE Ventas CASCADE CONSTRAINTS;
-DROP TABLE DetallesVentas CASCADE CONSTRAINTS;
-DROP TABLE Productos CASCADE CONSTRAINTS;
-DROP TABLE Repuestos CASCADE CONSTRAINTS;
-DROP TABLE Motos CASCADE CONSTRAINTS;
-DROP TABLE Accesorios CASCADE CONSTRAINTS;
-DROP TABLE DetallesCompras CASCADE CONSTRAINTS;
-DROP TABLE Compras CASCADE CONSTRAINTS;
-DROP TABLE Proveedores CASCADE CONSTRAINTS;
-DROP TABLE telefonosProveedores CASCADE CONSTRAINTS;

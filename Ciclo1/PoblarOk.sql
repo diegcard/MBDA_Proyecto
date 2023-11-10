@@ -140,7 +140,7 @@ VALUES ('5', '3009871537');
 -- Compas
 
 INSERT INTO Compras (idCompra, idProveedor, idEmpleado, fecha, totalCompra, estadoCompra, descripcionCompra)
-VALUES ('1', '1', 6,DATE '2021-01-15', 750000, 'C', 'Compra de discos de freno');
+VALUES ('1', '1', 6, DATE '2021-01-15', 750000, 'C', 'Compra de discos de freno');
 
 INSERT INTO Compras (idCompra, idProveedor, idEmpleado, fecha, totalCompra, estadoCompra, descripcionCompra)
 VALUES ('2', '2', 8, DATE '2022-05-20', 4500000, 'F', 'Compra de motos RX150');

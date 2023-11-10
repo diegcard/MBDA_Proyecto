@@ -1,0 +1,15 @@
+-- XPoblar
+TRUNCATE TABLE telefonosProveedores;
+TRUNCATE TABLE telefonosPersona;
+TRUNCATE TABLE Clientes;
+TRUNCATE TABLE Empleados;
+TRUNCATE TABLE Proveedores;
+TRUNCATE TABLE Accesorios;
+TRUNCATE TABLE Repuestos;
+TRUNCATE TABLE Motos;
+TRUNCATE TABLE Personas;
+TRUNCATE TABLE Ventas;
+TRUNCATE TABLE DetallesVentas;
+TRUNCATE TABLE Productos;
+TRUNCATE TABLE DetallesCompras;
+TRUNCATE TABLE Compras;
