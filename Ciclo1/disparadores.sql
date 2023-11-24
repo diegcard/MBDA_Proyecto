@@ -7,18 +7,17 @@
 /*---------------------------------Mantener Ventas---------------------------------*/
 /*-----Adicion-----*/
 -- La fecha y Hora se ponen automaticamente en la inserccion de datos
-CREATE OR REPLACE TRIGGER TR_Ventas_In_Be_Default
+CREATE OR REPLACE TRIGGER TR_Ventas_BI_Default
 BEFORE INSERT ON Ventas
 FOR EACH ROW
 BEGIN
-  :NEW.fechaVenta := SYSDATE;  
-  :NEW.horaVenta := CURRENT_TIMESTAMP;
+  :NEW.fechaVenta := systimestamp;  
   :NEW.totalVenta := 0;
 END;
 /
 
 -- Calcula precioTotal automaticamente multiplicando el precioUnitario y la cantidad 
-CREATE OR REPLACE TRIGGER TR_DetallesVentas_totalVenta_BE_IN
+CREATE OR REPLACE TRIGGER TR_DetallesVentas_totalVenta_BI
 BEFORE INSERT ON DetallesVentas
 FOR EACH ROW
 DECLARE
@@ -29,7 +28,7 @@ END;
 /
 
 -- Descontar cantidad automaticamente de la tabla productos de un articulo vendido
-CREATE OR REPLACE TRIGGER TR_DetallesVentas_cantidad_recontar
+CREATE OR REPLACE TRIGGER TR_DetallesVentas_cantidad_recontar_AI
 AFTER INSERT ON DetallesVentas
 FOR EACH ROW
 BEGIN
@@ -40,8 +39,8 @@ END;
 /
 
 -- En la tabla Ventas en el atributo totalventa se calcula, sumando todos los detalles ventas asociados a dicha factura
-CREATE OR REPLACE TRIGGER TR_DeatllesVentas_AF_IN_UP_DE_totalVenta
-AFTER INSERT OR UPDATE OR DELETE ON DetallesVentas
+CREATE OR REPLACE TRIGGER TR_DeatllesVentas_AI_totalVenta
+AFTER INSERT ON DetallesVentas
 BEGIN
     UPDATE Ventas v
     SET totalVenta = (SELECT SUM(d.precioTotal)
@@ -52,57 +51,20 @@ END;
 /
 
 /*-----Modificacion-----*/
--- El unico Dato que se puede modificar en Ventas es la descripcion 
-CREATE OR REPLACE TRIGGER TR_Ventas_Ud_Be_Se
-BEFORE UPDATE ON Ventas
-FOR EACH ROW
-BEGIN
-  IF UPDATING('idVenta') OR UPDATING('fechaVenta') OR UPDATING('horaVenta') THEN
-    RAISE_APPLICATION_ERROR(-20001, 'No se permite modificar dichos atributos excepto.');
-  END IF;
-END;
-/
-
--- El unico Dato que se puede modificar en detallesVentas es la descripcion 
-CREATE OR REPLACE TRIGGER TR_DetallesVentas_Ud_Be_Se
-BEFORE UPDATE ON DetallesVentas
-FOR EACH ROW
-BEGIN
-  IF UPDATING('idDetalleVenta') OR UPDATING('idVenta') THEN
-    RAISE_APPLICATION_ERROR(-20002, 'No se permite modificar los atributos.');
-  END IF;
-END;
-/
+-- No se puedene modificar los atributos
 
 /*-----Eliminacion-----*/
+/*
+Preguntar
+*/
 --Cuando se elimina una venta se eliminan los detallesVentas asociados con dicha venta
 --Eso esta implementado en las acciones
 
 /*---------------------------------Mantener Productos---------------------------------*/
 
 /*-----Adicion-----*/
---Crea el id automaticamente
-/*
-----------VERIFICAR
-CREATE OR REPLACE TRIGGER TR_Productos_id_In_Be
-BEFORE INSERT ON Productos
-FOR EACH ROW
-DECLARE
-  tip CHAR(1) := :NEW.tipoProducto;
-BEGIN
-  IF tip = 'R' THEN
-    :NEW.idProducto := 'R' || Producto_id_Repuesto.NEXTVAL;
-  ELSIF tip = 'M' THEN
-    :NEW.idProducto := 'M' || Producto_id_Moto.NEXTVAL;
-  ELSIF tip = 'A' THEN
-    :NEW.idProducto := 'A' || Producto_id_Accesorio.NEXTVAL;
-  END IF;
-END;
-/
-*/
-
 /*-----Modificacion-----*/
---El precio tiene que ser positivo (Esto es una accion ya realizada)
+--El precio tiene que ser positivo (Esto es un check ya realizado)
 /*-----Eliminacion-----*/
 --Cuando se elimina un producto se eliminan las herencias asociados con dicho producto
 --Eso esta implementado en las acciones
@@ -111,7 +73,7 @@ END;
 /*---------------------------------Mantener Compras---------------------------------*/
 /*-----Adicion-----*/
 -- La fecha y Hora se ponen automaticamente en la inserccion de datos
-CREATE OR REPLACE TRIGGER TR_Compras_In_Be_Default
+CREATE OR REPLACE TRIGGER TR_Compras_BI_Default
 BEFORE INSERT ON Compras
 FOR EACH ROW
 BEGIN
@@ -121,7 +83,7 @@ END;
 /
 
 -- Calcula precioTotal automaticamente multiplicando el precioUnitario y la cantidad 
-CREATE OR REPLACE TRIGGER TR_DetallesCompras_subtotal_BE_IN
+CREATE OR REPLACE TRIGGER TR_DetallesCompras_subtotal_BI
 BEFORE INSERT ON DetallesCompras
 FOR EACH ROW
 DECLARE
@@ -132,8 +94,8 @@ END;
 /
 
 -- En la tabla Compras en el atributo totalCompra se calcula, sumando todos los DetallesCompras asociados a dicha compra
-CREATE OR REPLACE TRIGGER TR_DetallesCompras_AF_IN_UP_DE_subtotal
-AFTER INSERT OR UPDATE OR DELETE ON DetallesCompras
+CREATE OR REPLACE TRIGGER TR_DetallesCompras_AI_subtotal
+AFTER INSERT ON DetallesCompras
 BEGIN
     UPDATE Compras v
     SET totalCompra = (SELECT SUM(d.subtotal)
@@ -144,7 +106,7 @@ END;
 /
 
 -- Adicionar cantidad automaticamente de la tabla productos de un articulo Comprado
-CREATE OR REPLACE TRIGGER TR_DetallesCompras_cantidad_recontar
+CREATE OR REPLACE TRIGGER TR_DetallesCompras_cantidad_recontar_AI
 AFTER INSERT ON DetallesCompras
 FOR EACH ROW
 BEGIN
@@ -155,28 +117,7 @@ END;
 /
 
 /*-----Modificacion-----*/
--- El unico Dato que se puede modificar en Compras es la descripcion y el estado 
-CREATE OR REPLACE TRIGGER TR_Compras_Ud_Be_Se
-BEFORE UPDATE ON Ventas
-FOR EACH ROW
-BEGIN
-  IF UPDATING('idCompra') OR UPDATING('fechaCompra') THEN
-    RAISE_APPLICATION_ERROR(-20003, 'No se permite modificar dichos atributos excepto.');
-  END IF;
-END;
-/
-
--- El unico Dato que se puede modificar en detallesCompras es la descripcion 
-CREATE OR REPLACE TRIGGER TR_DetallesVentas_Ud_Be_Se
-BEFORE UPDATE ON DetallesVentas
-FOR EACH ROW
-BEGIN
-  IF UPDATING('idDetalleCompra') OR UPDATING('idCompra') THEN
-    RAISE_APPLICATION_ERROR(-20004, 'No se permite modificar los atributos.');
-  END IF;
-END;
-/
-
+-- No se pueden modificar las Compras
 /*-----Eliminacion-----*/
 --Cuando se elimina una Compra se eliminan los detallesCompras asociadas a dicha Compra
 --Es una accion y ya esta implementada

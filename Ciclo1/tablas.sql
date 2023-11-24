@@ -44,7 +44,6 @@ CREATE TABLE Ventas(
     idEmpleado NUMBER(11) NULL,
     idCliente NUMBER(11) NULL,
     fechaVenta DATE NOT NULL,
-    horaVenta TIMESTAMP NOT NULL,
     totalVenta NUMBER(20,2) NULL,
     descripcionVenta VARCHAR2(200) NULL
 );

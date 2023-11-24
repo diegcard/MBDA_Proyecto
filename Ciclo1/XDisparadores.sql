@@ -1,4 +1,4 @@
-DROP TRIGGER TR_Ventas_In_Be_Default;
+cdDROP TRIGGER TR_Ventas_In_Be_Default;
 DROP TRIGGER TR_DetallesVentas_totalVenta_BE_IN;
 DROP TRIGGER TR_DetallesVentas_cantidad_recontar;
 DROP TRIGGER TR_DeatllesVentas_AF_IN_UP_DE_totalVenta;
@@ -11,3 +11,4 @@ DROP TRIGGER TR_DetallesCompras_AF_IN_UP_DE_subtotal;
 DROP TRIGGER TR_DetallesCompras_cantidad_recontar;
 DROP TRIGGER TR_Compras_Ud_Be_Se;
 DROP TRIGGER TR_DetallesVentas_Ud_Be_Se;
+
