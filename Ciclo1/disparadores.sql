@@ -1,8 +1,34 @@
 /*---------------------------------Mantener Personas---------------------------------*/
 /*-----Adicion-----*/
+-- El tipo de identificacion se pone en mayuscula automaticamente
+CREATE OR REPLACE TRIGGER TR_Personas_Ve_tipoIde
+BEFORE INSERT ON Personas
+FOR EACH ROW
+BEGIN
+    :NEW.tipoIdentificacion := UPPER(:NEW.tipoIdentificacion);
+END;
+/
+
 /*-----Modificacion-----*/
+CREATE OR REPLACE TRIGGER TR_Personas_Up_restric_Be
+BEFORE UPDATE ON Personas
+FOR EACH ROW
+BEGIN
+    IF :NEW.dirrecion IS NOT NULL OR :NEW.correoElectronico IS NOT NULL THEN
+        IF :NEW.dirrecion IS NOT NULL THEN
+            :OLD.dirrecion := :NEW.dirrecion;
+        END IF;
+
+        IF :NEW.correoElectronico IS NOT NULL THEN
+            :OLD.correoElectronico := :NEW.correoElectronico;
+        END IF;
+    ELSE
+        raise_application_error(-20001, 'No se puede modificar otras columnas aparte de la dirección y el correo electrónico.');
+    END IF;
+END;
+/
 /*-----Eliminacion-----*/
---Cuando se elimina una persona, se elimina de la tabla Clientes o Empleados
+--Cuando se elimina una persona, se elimina de la tabla Clientes o Empleados tambien se eliminan los telefonos asociados con dicha persona
 
 /*---------------------------------Mantener Ventas---------------------------------*/
 /*-----Adicion-----*/
@@ -13,6 +39,59 @@ FOR EACH ROW
 BEGIN
   :NEW.fechaVenta := systimestamp;  
   :NEW.totalVenta := 0;
+  IF :NEW.estadoVenta IS NULL THEN
+    :NEW.estadoVenta := 'Pendiente';
+  END IF;
+END;
+/
+
+-- Después de insertar una venta se actualiza el estado del producto a No disponible si la cantidad en stock es 0 
+CREATE OR REPLACE TRIGGER TR_DetallesVentas_estadoProducto_cero_actualizar_AF
+AFTER INSERT ON DetallesVentas
+FOR EACH ROW
+DECLARE
+  v_cantidad NUMBER;
+BEGIN
+  SELECT P.cantidadEnStock INTO v_cantidad
+  FROM Productos P
+  WHERE P.idProducto = :NEW.idProducto;
+  
+  IF v_cantidad = 0 THEN
+    UPDATE Productos P 
+    SET P.estadoProducto = 'N'
+    WHERE P.idProducto = :NEW.idProducto;
+
+  ELSIF v_cantidad > 0 THEN
+    UPDATE Productos P 
+    SET P.estadoProducto = 'D'
+    WHERE P.idProducto = :NEW.idProducto;
+  END IF;
+END;
+/
+
+-- Un producto solo se puede vender si su estado es Disponible 
+CREATE OR REPLACE TRIGGER TR_DetallesVentas_estadoProducto
+BEFORE INSERT ON DetallesVentas
+FOR EACH ROW
+DECLARE
+  v_cantidad NUMBER;
+  v_estado CHAR;
+BEGIN
+  SELECT P.cantidadEnStock INTO v_cantidad
+  FROM Productos P
+  WHERE P.idProducto = :NEW.idProducto;
+  
+  SELECT estadoProducto INTO v_estado
+  FROM Productos P
+  WHERE P.idProducto = :NEW.idProducto;
+
+  IF v_cantidad < :NEW.cantidad THEN
+    raise_application_error(-20002, 'No se puede vender más de lo que hay en stock.');
+  END IF;
+
+  IF v_estado <> 'D' THEN
+    raise_application_error(-20003, 'No se puede vender un producto que no esté disponible.');
+  END IF;
 END;
 /
 
@@ -51,20 +130,37 @@ END;
 /
 
 /*-----Modificacion-----*/
--- No se puedene modificar los atributos
+-- El unico dato que no se puede modificar es fechaVenta
+CREATE OR REPLACE TRIGGER TR_Ventas_Up_restric_Be
+BEFORE UPDATE ON Ventas
+FOR EACH ROW
+BEGIN
+    IF :NEW.fechaVenta IS NOT NULL THEN
+        :OLD.fechaVenta := :NEW.fechaVenta;
+    ELSE
+        raise_application_error(-20004, 'No se puede modificar la fecha de la venta.');
+    END IF;
+END;
+/
 
 /*-----Eliminacion-----*/
-/*
-Preguntar
-*/
 --Cuando se elimina una venta se eliminan los detallesVentas asociados con dicha venta
 --Eso esta implementado en las acciones
 
 /*---------------------------------Mantener Productos---------------------------------*/
-
 /*-----Adicion-----*/
+--El estado inicial del prodducto en precio es 0 y en cantidadEnStock es 0 y el estado es N
+CREATE OR REPLACE TRIGGER TR_Productos_BI_Default
+BEFORE INSERT ON Productos
+FOR EACH ROW
+BEGIN
+  :NEW.cantidadEnStock := 0;
+  :NEW.estadoProducto := 'N';
+END;
+/
+
 /*-----Modificacion-----*/
---El precio tiene que ser positivo (Esto es un check ya realizado)
+--El precio tiene que ser positivo y la cantidad no puede ser negativa (Esto es un check ya realizado)
 /*-----Eliminacion-----*/
 --Cuando se elimina un producto se eliminan las herencias asociados con dicho producto
 --Eso esta implementado en las acciones
@@ -112,6 +208,10 @@ FOR EACH ROW
 BEGIN
   UPDATE Productos P
   SET P.cantidadEnStock = P.cantidadEnStock + :NEW.cantidad
+  WHERE P.idProducto = :NEW.idProducto;
+
+  UPDATE Productos P
+  SET estadoProducto = 'D'
   WHERE P.idProducto = :NEW.idProducto;
 END;
 /

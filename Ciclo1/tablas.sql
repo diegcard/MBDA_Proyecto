@@ -45,7 +45,8 @@ CREATE TABLE Ventas(
     idCliente NUMBER(11) NULL,
     fechaVenta DATE NOT NULL,
     totalVenta NUMBER(20,2) NULL,
-    descripcionVenta VARCHAR2(200) NULL
+    descripcionVenta VARCHAR2(200) NULL,
+    estadoVenta CHAR(1) NOT NULL
 );
 
 CREATE TABLE DetallesVentas(
@@ -64,7 +65,8 @@ CREATE TABLE Productos(
     nombre VARCHAR2(50) NOT NULL,
     precio NUMBER(20,2) NOT NULL,
     cantidadEnStock NUMBER(10) NOT NULL,
-    tipoProducto CHAR(1) NOT NULL
+    tipoProducto CHAR(1) NOT NULL,
+    estadoProducto CHAR(1) NOT NULL
 );
 
 CREATE TABLE Repuestos(
