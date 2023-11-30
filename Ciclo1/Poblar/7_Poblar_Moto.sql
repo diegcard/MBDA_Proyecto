@@ -1,3 +1,4 @@
+--xd
 INSERT INTO Motos (idProducto, marca, modelo, anio, color, cilindraje, descripcion)
 VALUES ('M1', 'Honda','Sport', TO_DATE('2024', 'YYYY'), 'Rojo', 150, 'Ninguna');
 INSERT INTO Motos (idProducto, marca, modelo, anio, color, cilindraje, descripcion)

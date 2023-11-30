@@ -1,3 +1,4 @@
+/*----------Paquete Personas----------*/
 /*Module Personas*/
 BEGIN
     PC_PERSONA.AD_Persona('John', 'Doe', 123456789, 'C.C', '123 Main St', 'john.doe@xample.com');
@@ -62,3 +63,81 @@ BEGIN
         XSALARIO => 2500000
     );
 END;
+
+/*Module Consultas*/
+
+DECLARE
+    CO_Persona SYS_REFCURSOR;
+BEGIN
+    CO_Persona := PC_PERSONA.CO_Persona;
+    DBMS_SQL.RETURN_RESULT(CO_Persona);
+END;
+/
+
+DECLARE
+    CO_TelefonoPersona SYS_REFCURSOR;
+BEGIN
+    CO_TelefonoPersona := PC_PERSONA.CO_TelefonoPersona;
+    DBMS_SQL.RETURN_RESULT(CO_TelefonoPersona);
+END;
+/
+
+DECLARE
+    CO_Cliente SYS_REFCURSOR;
+BEGIN
+    CO_Cliente := PC_PERSONA.CO_Cliente;
+    DBMS_SQL.RETURN_RESULT(CO_Cliente);
+END;
+/
+
+DECLARE
+    CO_Empleado SYS_REFCURSOR;
+BEGIN
+    CO_Empleado := PC_PERSONA.CO_Empleado;
+    DBMS_SQL.RETURN_RESULT(CO_Empleado);
+END;
+/
+
+/*----------Paquete Ventas----------*/
+/*Module Ventas*/
+BEGIN
+    PC_VENTAS.AD_Venta(1,6, 'Venta de varias Motos', 'A');
+END;
+
+EXECUTE PC_VENTAS.AD_Venta(2, 6, 'Venta de varias Motos', 'P');
+
+BEGIN
+    PC_VENTAS.MO_Venta(
+        XIDVENTA => 2,
+        XDESCRIPCION => 'Venta de Otras Motos',
+        XESTADO => 'A'
+    );
+END;
+
+BEGIN
+    PC_VENTAS.EL_Venta(2);
+END;
+
+/*Module DetalleVenta*/
+
+
+/*----------Paquete Ventas----------*/
+/*Module Productos*/
+BEGIN
+    PC_PRODUCTOS.AD_Producto('M1', 'Moto RX150', 12000000, 0, 'M', 'N');
+END;
+
+EXECUTE PC_PRODUCTOS.AD_Productos('M1', 'Moto RX150', 12000000, 0, 'M', 'N');
+EXECUTE PC_PRODUCTOS.AD_Productos('M2', 'Moto Honda XBlade 160', 12500000, 0, 'M', 'N');
+EXECUTE PC_PRODUCTOS.AD_Productos('M3', 'Moto Gixxer 250', 15000000, 0, 'M', 'N');
+EXECUTE PC_PRODUCTOS.AD_Productos('M4', 'Moto Honda CB 125F 2024', 7100000, 0, 'M', 'N');
+EXECUTE PC_PRODUCTOS.AD_Productos('M5', 'Moto Honda CB 190R Repsol 2024', 12400000, 0, 'M', 'N');
+
+
+
+EXECUTE PC_PRODUCTOS.AD_Motos('M1', 'Honda','Sport', TO_DATE('2024', 'YYYY'), 'Rojo', 150, 'Ninguna');
+EXECUTE PC_PRODUCTOS.AD_Motos('M2', 'Honda','Sport', TO_DATE('2024', 'YYYY'), 'Rojo', 165, NULL);
+EXECUTE PC_PRODUCTOS.AD_Motos('M3', 'Suzuki','Sport', TO_DATE('2023', 'YYYY'), 'Negro', 250, NULL);
+EXECUTE PC_PRODUCTOS.AD_Motos('M4', 'Honda','Sport', TO_DATE('2024', 'YYYY'), 'Blanca', 125, NULL);
+EXECUTE PC_PRODUCTOS.AD_Motos('M5', 'Honda','Sport', TO_DATE('2024', 'YYYY'), 'Negro', 190, NULL);
+

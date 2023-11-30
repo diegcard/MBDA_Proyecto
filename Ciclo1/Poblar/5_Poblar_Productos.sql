@@ -1,4 +1,4 @@
--- Productos
+-- Producto
 INSERT INTO Productos (idProducto, nombre, precio, cantidadEnStock, tipoProducto)
 VALUES ('M1', 'Moto RX150', 12000000, 0, 'M');
 INSERT INTO Productos (idProducto, nombre, precio, cantidadEnStock, tipoProducto)

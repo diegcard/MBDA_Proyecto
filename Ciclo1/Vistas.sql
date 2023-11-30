@@ -14,7 +14,58 @@ FROM
     Personas P
 JOIN
     Empleados E ON P.idPersona = E.idPersona;
-    
+
+/*Me muestra la informacion de los Repuestos*/
+CREATE OR REPLACE VIEW infoRepuestos AS
+SELECT 
+    p.idProducto AS "Id Producto",
+    p.nombre AS "Nombre Producto",
+    p.precio AS "Precio",
+    p.cantidadEnStock AS "Cantidad en Stock",
+    p.tipoProducto AS "Tipo de Producto",
+    p.estadoProducto AS "Estado del Producto",
+    e.tipo AS "Tipo de Repuesto",
+    e.descripcion AS "Descripcion"
+FROM 
+    Productos p
+JOIN
+    Repuestos e ON p.idProducto = e.idProducto;
+
+/*Me muestra la informacion de las Motos*/
+CREATE OR REPLACE VIEW infoMotos AS
+SELECT 
+    p.idProducto AS "Id Producto",
+    p.nombre AS "Nombre Producto",
+    p.precio AS "Precio",
+    p.cantidadEnStock AS "Cantidad en Stock",
+    p.tipoProducto AS "Tipo de Producto",
+    p.estadoProducto AS "Estado del Producto",
+    e.marca AS "Marca",
+    e.modelo AS "Modelo",
+    e.anio AS "Año",
+    e.color AS "Color",
+    e.cilindraje AS "Cilindraje",
+    e.descripcion AS "Descripcion"
+FROM 
+    Productos p
+JOIN
+    Motos e ON p.idProducto = e.idProducto;
+
+/*Me muestra la informacion de los Accesorios*/
+CREATE OR REPLACE VIEW infoAccesorios AS
+SELECT 
+    p.idProducto AS "Id Producto",
+    p.nombre AS "Nombre Producto",
+    p.precio AS "Precio",
+    p.cantidadEnStock AS "Cantidad en Stock",
+    p.tipoProducto AS "Tipo de Producto",
+    p.estadoProducto AS "Estado del Producto",
+    e.descripcion AS "Descripcion"
+FROM 
+    Productos p
+JOIN
+    Accesorios e ON p.idProducto = e.idProducto;
+
 /*Me muestra la informacion de los Clientes*/
 CREATE OR REPLACE VIEW infoClientes AS 
 SELECT 
