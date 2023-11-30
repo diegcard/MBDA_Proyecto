@@ -1,29 +1,30 @@
 /*Me muestra la informacion de los empleados*/
 CREATE OR REPLACE VIEW infoEmpleados AS
 SELECT
-    P.identificacion,
-    P.nombre,
-    P.apellidos,
-    P.dirrecion AS direccion,
-    P.correoElectronico,
-    E.sexo,
-    E.etadoCivil,
-    E.cargo,
-    E.salario
+    P.identificacion AS "Identificacion",
+    P.nombre AS "Nombre",
+    P.apellidos AS "apellido",
+    P.dirrecion AS direccion ,
+    P.correoElectronico AS "Correo Electronico",
+    E.sexo AS "Sexo",
+    E.estadoCivil AS "Estado Civil",
+    E.cargo AS "Cargo",
+    E.salario AS "Salario"
 FROM
     Personas P
 JOIN
     Empleados E ON P.idPersona = E.idPersona;
+    
 /*Me muestra la informacion de los Clientes*/
 CREATE OR REPLACE VIEW infoClientes AS 
 SELECT 
-    p.identificacion,
-    p.nombre,
-    p.apellidos,
+    p.identificacion AS "Identificacion",
+    p.nombre AS "Nombre",
+    p.apellidos AS "apellidos",
     p.dirrecion AS direccion,
-    p.correoElectronico,
-    c.ocupacion,
-    c.ingresos
+    p.correoElectronico AS "Correo Electronico",
+    c.ocupacion AS "Ocupacion",
+    c.ingresos AS "Ingresos"
 FROM
     Personas p
 JOIN
@@ -32,9 +33,9 @@ JOIN
 /*Muestra la informacion de los productos por debajo del Stock que es 5*/
 CREATE OR REPLACE VIEW ProductoDebajoStock AS
 SELECT 
-    p.idProducto,
-    p.nombre,
-    p.stock
+    p.idProducto AS "Id Producto",
+    p.nombre AS "Nombre Producto",
+    p.stock AS "Stock"
 FROM
     Productos p
 WHERE
@@ -65,4 +66,44 @@ FROM Personas p
     GROUP BY p.nombre
     HAVING SUM(v.totalVenta) IS NOT NULL
     ORDER BY SUM(v.totalVenta) DESC
+    FETCH FIRST 5 ROW ONLY;
+
+/*Muestra el Empleado con mayor Ventas*/
+CREATE OR REPLACE VIEW EmpleadosConMayorVentas AS
+SELECT 
+    p.nombre AS "Nombre del Empleado", 
+    COUNT(v.idVenta) AS "Número de Ventas", 
+    SUM(v.totalVenta) AS "Total de Ventas"
+FROM Personas p
+    INNER JOIN Empleados e ON p.idPersona = e.idPersona
+    LEFT JOIN Ventas v ON p.idPersona = v.idEmpleado
+    GROUP BY p.nombre
+    HAVING SUM(v.totalVenta) IS NOT NULL
+    ORDER BY SUM(v.totalVenta) DESC
+    FETCH FIRST 5 ROW ONLY;
+
+/*Muestra el top 5 de los productos mas comprados*/
+CREATE OR REPLACE VIEW ProductoMasComprado AS
+SELECT 
+    p.nombre AS "Producto Más Comprado", 
+    SUM(dv.cantidad) AS "Cantidad Comprada", 
+    SUM(dv.subtotal) AS "Total Comprado"
+FROM Productos p
+    INNER JOIN DetallesCompras dv ON p.idProducto = dv.idProducto
+    GROUP BY p.nombre
+ORDER BY SUM(dv.cantidad) DESC
+FETCH FIRST 5 ROW ONLY;
+
+/*Muestra el proveedor con mas compras*/
+CREATE OR REPLACE VIEW ProveedorConMasCompras AS
+SELECT 
+    p.nombre AS "Nombre del Proveedor", 
+    COUNT(c.idCompra) AS "Número de Compras", 
+    SUM(c.totalCompra) AS "Total de Compras"
+FROM proveedores p
+    INNER JOIN Proveedores pr ON p.idProveedor = pr.idProveedor
+    LEFT JOIN Compras c ON p.idProveedor = c.idProveedor
+    GROUP BY p.nombre
+    HAVING SUM(c.totalCompra) IS NOT NULL
+    ORDER BY SUM(c.totalCompra) DESC
     FETCH FIRST 5 ROW ONLY;

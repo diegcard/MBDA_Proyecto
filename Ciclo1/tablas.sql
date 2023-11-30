@@ -2,15 +2,14 @@
 /*
 Comentarios:
 Total de Tablas: 14
-Total de Atributos: 69
+Total de Atributos: 71
 */
 -- Color Azul
-
 
 CREATE TABLE Personas(
     idPersona NUMBER(11) NOT NULL,
     nombre VARCHAR2(20) NOT NULL,
-    apellidos VARCHAR2(20) NOT NULL,
+    apellido VARCHAR2(20) NOT NULL,
     identificacion NUMBER(20) NOT NULL,
     tipoIdentificacion CHAR(5) NOT NULL,
     dirrecion VARCHAR2(50) NULL,
@@ -32,7 +31,7 @@ CREATE TABLE Clientes(
 CREATE TABLE Empleados(
     idPersona NUMBER(11) NOT NULL,
     sexo CHAR(1) NULL,
-    etadoCivil CHAR(1) NULL,
+    estadoCivil CHAR(1) NULL,
     cargo VARCHAR2(15) NOT NULL,
     salario NUMBER(20,2) NOT NULL
 );

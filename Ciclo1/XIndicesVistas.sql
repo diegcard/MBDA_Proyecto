@@ -10,3 +10,6 @@ DROP VIEW infoClientes;
 DROP VIEW ProductoDebajoStock;
 DROP VIEW ProductoMasVendido;
 DROP VIEW ClientesConMayorCompras;
+DROP VIEW EmpleadosConMayorVentas;
+DROP VIEW ProductoMasComprado;
+DROP VIEW ProveedorConMasCompras;

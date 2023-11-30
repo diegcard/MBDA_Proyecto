@@ -10,6 +10,7 @@ END;
 /
 
 /*-----Modificacion-----*/
+--Solo se puede modificar la columnas de direccion y correoElectronico
 CREATE OR REPLACE TRIGGER TR_Personas_Up_restric_Be
 BEFORE UPDATE ON Personas
 FOR EACH ROW
@@ -55,12 +56,10 @@ BEGIN
   SELECT P.cantidadEnStock INTO v_cantidad
   FROM Productos P
   WHERE P.idProducto = :NEW.idProducto;
-  
   IF v_cantidad = 0 THEN
     UPDATE Productos P 
     SET P.estadoProducto = 'N'
     WHERE P.idProducto = :NEW.idProducto;
-
   ELSIF v_cantidad > 0 THEN
     UPDATE Productos P 
     SET P.estadoProducto = 'D'
@@ -69,7 +68,7 @@ BEGIN
 END;
 /
 
--- Un producto solo se puede vender si su estado es Disponible 
+-- Un producto solo se puede vender si su estado es Disponible y mayor a 0
 CREATE OR REPLACE TRIGGER TR_DetallesVentas_estadoProducto
 BEFORE INSERT ON DetallesVentas
 FOR EACH ROW
@@ -88,7 +87,6 @@ BEGIN
   IF v_cantidad < :NEW.cantidad THEN
     raise_application_error(-20002, 'No se puede vender más de lo que hay en stock.');
   END IF;
-
   IF v_estado <> 'D' THEN
     raise_application_error(-20003, 'No se puede vender un producto que no esté disponible.');
   END IF;
