@@ -86,11 +86,11 @@ CREATE OR REPLACE VIEW ProductoDebajoStock AS
 SELECT 
     p.idProducto AS "Id Producto",
     p.nombre AS "Nombre Producto",
-    p.stock AS "Stock"
+    p.cantidadEnStock AS "Stock"
 FROM
     Productos p
 WHERE
-    p.stock < 5;
+    p.cantidadEnStock < 5;
 
 /*Muestra el top 5 de los productos mas vendidos*/
 CREATE OR REPLACE VIEW ProductoMasVendido AS

@@ -159,3 +159,279 @@ CREATE OR REPLACE PACKAGE BODY PC_PERSONA AS
     END CO_Empleado;
 END PC_PERSONA;
 /
+
+
+
+/*Module ventas*/
+
+CREATE OR REPLACE PACKAGE BODY PC_VENTAS AS
+    PROCEDURE AD_Venta(xidEmpleado IN NUMBER, xidCliente IN NUMBER, xdescripcionVenta IN VARCHAR, xestadoVenta IN CHAR) IS
+    BEGIN
+        
+        INSERT INTO Ventas(idVenta, idEmpleado, idCliente, descripcionVenta, estadoVenta) 
+        VALUES(SEQ_idVenta.NEXTVAL, xidEmpleado, xidCliente, xdescripcionVenta, xestadoVenta);
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20213, 'No se pudo agregar la venta');
+    END AD_Venta;
+
+    PROCEDURE MO_Venta(xidVenta IN NUMBER, xdescripcionVenta IN VARCHAR, xestadoVenta IN CHAR) IS
+    BEGIN
+        UPDATE Ventas SET 
+        descripcionVenta = xdescripcionVenta, 
+        estadoVenta = xestadoVenta 
+        WHERE idVenta = xidVenta;
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20214, 'No se pudo modificar la venta');
+    END MO_Venta;
+
+    PROCEDURE EL_Venta(xidVenta IN NUMBER) IS
+    BEGIN
+        DELETE FROM Ventas WHERE idVenta = xidVenta;
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20215, 'No se pudo eliminar la venta');
+    END EL_Venta;
+
+    PROCEDURE AD_DetalleVenta(xidVenta IN VARCHAR, xidProducto IN VARCHAR, xcantidad IN NUMBER, xprecioUnitario IN NUMBER) IS
+    BEGIN
+        INSERT INTO DetallesVentas(idDetalleVenta, idVenta, idProducto, cantidad, precioUnitario) 
+        VALUES(SEQ_idDetalleVenta.NEXTVAL, xidVenta, xidProducto, xcantidad, xprecioUnitario);
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20216, 'No se pudo agregar el detalle de la venta');
+    END AD_DetalleVenta;
+
+    PROCEDURE EL_DetalleVenta(xidDetalleVenta IN VARCHAR) IS
+    BEGIN
+        DELETE FROM DetallesVentas 
+        WHERE idDetalleVenta = xidDetalleVenta;
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20217, 'No se pudo eliminar el detalle de la venta');
+    END EL_DetalleVenta;
+
+
+    FUNCTION CO_Venta RETURN SYS_REFCURSOR IS
+        xcursor SYS_REFCURSOR;
+    BEGIN
+        OPEN xcursor FOR
+        SELECT * FROM Ventas;
+        RETURN xcursor;
+    END CO_Venta;
+
+    FUNCTION CO_DetalleVenta RETURN SYS_REFCURSOR IS
+        xcursor SYS_REFCURSOR;
+    BEGIN
+        OPEN xcursor FOR
+        SELECT * FROM DetallesVentas;
+        RETURN xcursor;
+    END CO_DetalleVenta;
+
+    FUNCTION CO_DetallesVentaEspecifico(xidVenta IN VARCHAR) RETURN SYS_REFCURSOR IS
+        xcursor SYS_REFCURSOR;
+    BEGIN
+        OPEN xcursor FOR
+        SELECT * FROM DetallesVentas WHERE idVenta = xidVenta;
+        RETURN xcursor;
+    END CO_DetallesVentaEspecifico;
+
+END PC_VENTAS;
+/
+
+
+CREATE OR REPLACE PACKAGE BODY PC_PRODUCTOS AS
+    ----------------------------------------------------------------------------------------------------------------------------
+    PROCEDURE AD_Repuestos(xidProducto IN VARCHAR, xnombre IN VARCHAR, xprecio IN NUMBER, xcantidadEnStock IN NUMBER, xtipoProducto IN CHAR, xestadoProducto IN CHAR, xtipoRepuesto IN VARCHAR, xdescripcion IN VARCHAR) IS
+    BEGIN
+        INSERT INTO Productos(idProducto, nombre, precio, cantidadEnStock, tipoProducto, estadoProducto) 
+        VALUES(xidProducto, xnombre, xprecio, xcantidadEnStock, xtipoProducto, xestadoProducto);
+
+        INSERT INTO Repuestos(idProducto, tipo, descripcion) 
+        VALUES(xidProducto, xtipoRepuesto, xdescripcion);
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20219, 'No se pudo agregar el repuesto');
+    END AD_Repuestos;
+
+    PROCEDURE MO_Repuestos(xidProducto IN VARCHAR, xnombre IN VARCHAR, xprecio IN NUMBER, xcantidadEnStock IN NUMBER, xtipoProducto IN CHAR, xestadoProducto IN CHAR, xtipoRepuesto IN VARCHAR, xdescripcion IN VARCHAR) IS
+    BEGIN
+        UPDATE Productos SET 
+        nombre = xnombre, 
+        precio = xprecio, 
+        cantidadEnStock = xcantidadEnStock, 
+        tipoProducto = xtipoProducto, 
+        estadoProducto = xestadoProducto 
+        WHERE idProducto = xidProducto;
+
+        UPDATE Repuestos SET 
+        tipo = xtipoRepuesto, 
+        descripcion = xdescripcion 
+        WHERE xidProducto = xidProducto;
+
+        COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20220, 'No se pudo modificar el repuesto');
+    END MO_Repuestos;
+
+    PROCEDURE EL_Repuestos(xidProducto IN VARCHAR) IS
+    BEGIN
+        DELETE FROM Productos WHERE idProducto = xidProducto;
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20221, 'No se pudo eliminar el repuesto');
+    END EL_Repuestos;
+
+    ----------------------------------------------------------------------------------------------------------------------------
+    PROCEDURE AD_Motos(xidProducto IN VARCHAR, xnombre IN VARCHAR, xprecio IN NUMBER, xcantidadEnStock IN NUMBER, xtipoProducto IN CHAR, xestadoProducto IN CHAR, 
+    xmarca IN VARCHAR, xmodelo IN VARCHAR, xanio IN DATE, xcolor IN VARCHAR, xcilindraje IN VARCHAR, xdescripcion IN VARCHAR) IS
+    BEGIN 
+        INSERT INTO Productos(idProducto, nombre, precio, cantidadEnStock, tipoProducto, estadoProducto) 
+        VALUES(xidProducto, xnombre, xprecio, xcantidadEnStock, xtipoProducto, xestadoProducto);
+
+        INSERT INTO Motos(idProducto, marca, modelo, anio, color, cilindraje, descripcion) 
+        VALUES(xidProducto, xmarca, xmodelo, xanio, xcolor, xcilindraje, xdescripcion);
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20222, 'No se pudo agregar la moto');
+    END AD_Motos;
+
+    PROCEDURE MO_Motos(xidProducto IN VARCHAR, xnombre IN VARCHAR, xprecio IN NUMBER, xcantidadEnStock IN NUMBER, xtipoProducto IN CHAR, xestadoProducto IN CHAR,
+    xmarca IN VARCHAR, xmodelo IN VARCHAR, xanio IN DATE, xcolor IN VARCHAR, xcilindraje IN VARCHAR, xdescripcion IN VARCHAR) IS
+    BEGIN
+        UPDATE Productos SET 
+        nombre = xnombre, 
+        precio = xprecio, 
+        cantidadEnStock = xcantidadEnStock, 
+        tipoProducto = xtipoProducto, 
+        estadoProducto = xestadoProducto 
+        WHERE idProducto = xidProducto;
+
+        UPDATE Motos SET 
+        marca = xmarca, 
+        modelo = xmodelo, 
+        anio = xanio, 
+        color = xcolor, 
+        cilindraje = xcilindraje, 
+        descripcion = xdescripcion 
+        WHERE idProducto = xidProducto;
+
+        COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20223, 'No se pudo modificar la moto');
+    END MO_Motos;
+
+    PROCEDURE EL_Motos(xidProducto IN VARCHAR) IS
+    BEGIN
+        DELETE FROM Productos 
+        WHERE idProducto = xidProducto;
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20224, 'No se pudo eliminar la moto');
+    END EL_Motos;
+    ----------------------------------------------------------------------------------------------------------------------------
+
+    PROCEDURE AD_Accesorios(xidProducto IN VARCHAR, xnombre IN VARCHAR, xprecio IN NUMBER, xcantidadEnStock IN NUMBER, xtipoProducto IN CHAR, xestadoProducto IN CHAR, xdescripcion IN VARCHAR) IS
+    BEGIN
+        INSERT INTO Productos(idProducto, nombre, precio, cantidadEnStock, tipoProducto, estadoProducto) 
+        VALUES(xidProducto, xnombre, xprecio, xcantidadEnStock, xtipoProducto, xestadoProducto);
+
+        INSERT INTO Accesorios(idProducto, descripcion) 
+        VALUES(xidProducto, xdescripcion);
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20225, 'No se pudo agregar el accesorio');
+    END AD_Accesorios;
+
+    PROCEDURE MO_Accesorios(xidProducto IN VARCHAR, xnombre IN VARCHAR, xprecio IN NUMBER, xcantidadEnStock IN NUMBER, xtipoProducto IN CHAR, xestadoProducto IN CHAR, xdescripcion IN VARCHAR) IS
+    BEGIN
+        UPDATE Productos SET 
+        nombre = xnombre, 
+        precio = xprecio, 
+        cantidadEnStock = xcantidadEnStock, 
+        tipoProducto = xtipoProducto, 
+        estadoProducto = xestadoProducto 
+        WHERE idProducto = xidProducto;
+
+        UPDATE Accesorios SET 
+        descripcion = xdescripcion 
+        WHERE idProducto = xidProducto;
+
+        COMMIT;
+        EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20226, 'No se pudo modificar el accesorio');
+    END MO_Accesorios;
+
+    PROCEDURE EL_Accesorios(xidProducto IN VARCHAR) IS
+    BEGIN
+        DELETE FROM Productos 
+        WHERE idProducto = xidProducto;
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20227, 'No se pudo eliminar el accesorio');
+    END EL_Accesorios;
+    ----------------------------------------------------------------------------------------------------------------------------
+    FUNCTION CO_Repuestos RETURN SYS_REFCURSOR IS c_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN c_cursor FOR 
+            SELECT * 
+            FROM infoRepuestos;
+        RETURN c_cursor;
+    END CO_Repuestos;
+
+    FUNCTION CO_Motos RETURN SYS_REFCURSOR IS c_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN c_cursor FOR 
+            SELECT * 
+            FROM infoMotos;
+        RETURN c_cursor;
+    END CO_Motos;
+
+    FUNCTION CO_Accesorios RETURN SYS_REFCURSOR IS c_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN c_cursor FOR 
+            SELECT * 
+            FROM infoAccesorios;
+        RETURN c_cursor;
+    END CO_Accesorios;
+
+    FUNCTION CO_ProductosBajoStock RETURN SYS_REFCURSOR IS c_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN c_cursor FOR 
+            SELECT * 
+            FROM ProductoDebajoStock;
+        RETURN c_cursor;
+    END CO_ProductosBajoStock;
+
+END PC_PRODUCTOS;
+/
+

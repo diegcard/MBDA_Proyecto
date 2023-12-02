@@ -117,7 +117,7 @@ END;
 
 -- En la tabla Ventas en el atributo totalventa se calcula, sumando todos los detalles ventas asociados a dicha factura
 CREATE OR REPLACE TRIGGER TR_DeatllesVentas_AI_totalVenta
-AFTER INSERT ON DetallesVentas
+AFTER INSERT OR DELETE ON DetallesVentas
 BEGIN
     UPDATE Ventas v
     SET totalVenta = (SELECT SUM(d.precioTotal)
@@ -133,11 +133,11 @@ CREATE OR REPLACE TRIGGER TR_Ventas_Up_restric_Be
 BEFORE UPDATE ON Ventas
 FOR EACH ROW
 BEGIN
-    IF :NEW.fechaVenta IS NOT NULL THEN
-        :OLD.fechaVenta := :NEW.fechaVenta;
-    ELSE
-        raise_application_error(-20004, 'No se puede modificar la fecha de la venta.');
-    END IF;
+  IF :NEW.fechaVenta IS NOT NULL THEN
+      :OLD.fechaVenta := :NEW.fechaVenta;
+  ELSE
+      raise_application_error(-20004, 'No se puede modificar la fecha de la venta.');
+  END IF;
 END;
 /
 
@@ -152,10 +152,16 @@ CREATE OR REPLACE TRIGGER TR_Productos_BI_Default
 BEFORE INSERT ON Productos
 FOR EACH ROW
 BEGIN
-  :NEW.cantidadEnStock := 0;
-  :NEW.estadoProducto := 'N';
+  IF :NEW.precio IS NULL THEN
+    :NEW.precio := 0;
+  END IF;
+
+  IF :NEW.estadoProducto IS NULL THEN
+    :NEW.estadoProducto := 0;
+  END IF;
 END;
 /
+
 
 /*-----Modificacion-----*/
 --El precio tiene que ser positivo y la cantidad no puede ser negativa (Esto es un check ya realizado)
