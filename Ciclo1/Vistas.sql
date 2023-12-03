@@ -158,3 +158,13 @@ FROM proveedores p
     HAVING SUM(c.totalCompra) IS NOT NULL
     ORDER BY SUM(c.totalCompra) DESC
     FETCH FIRST 5 ROW ONLY;
+
+/*Muestra la vista de un mes en Expecifico*/
+CREATE OR REPLACE VIEW VentasPorMes AS
+SELECT 
+    EXTRACT(MONTH FROM v.fechaVenta) AS "Mes", 
+    SUM(v.totalVenta) AS "Total de Ventas"
+FROM Ventas v
+    GROUP BY EXTRACT(MONTH FROM v.fechaVenta)
+    ORDER BY EXTRACT(MONTH FROM v.fechaVenta) ASC;
+    

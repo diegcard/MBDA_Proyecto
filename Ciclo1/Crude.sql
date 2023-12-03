@@ -20,6 +20,7 @@ CREATE OR REPLACE PACKAGE PC_PERSONA AS
     FUNCTION CO_Empleado RETURN SYS_REFCURSOR;
 END PC_PERSONA;
 /
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 /*PACKAGE Ventas*/
 CREATE OR REPLACE PACKAGE PC_VENTAS AS
     -- Venta
@@ -35,8 +36,7 @@ CREATE OR REPLACE PACKAGE PC_VENTAS AS
     FUNCTION CO_DetallesVentaEspecifico(xidVenta IN VARCHAR) RETURN SYS_REFCURSOR;
 END PC_VENTAS;
 /
-
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 /*PACKAGE Productos*/
 CREATE OR REPLACE PACKAGE PC_PRODUCTOS AS
     --Repuestos
@@ -58,7 +58,7 @@ CREATE OR REPLACE PACKAGE PC_PRODUCTOS AS
     FUNCTION CO_ProductosBajoStock RETURN SYS_REFCURSOR;
 END PC_PRODUCTOS;
 /
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
 /*PACKAGE Compras*/
 CREATE OR REPLACE PACKAGE PC_COMPRAS AS
     --Proveedor

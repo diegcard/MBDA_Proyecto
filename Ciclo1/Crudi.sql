@@ -1,5 +1,6 @@
 CREATE OR REPLACE PACKAGE BODY PC_PERSONA AS
     /*Module Personas*/
+    ----------------------------------------------------------------------------------------------------------------------------
     PROCEDURE AD_Persona(xnombre IN VARCHAR, xapellidos IN VARCHAR, Xidentificacion IN NUMBER, XtipoIdentificacion IN CHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR) IS
         v_yipoididentificacion NUMBER;
         v_correoElectronico NUMBER;
@@ -43,7 +44,7 @@ CREATE OR REPLACE PACKAGE BODY PC_PERSONA AS
             ROLLBACK;
             RAISE_APPLICATION_ERROR(-20205, 'No se pudo eliminar la persona');
     END EL_Persona;
- 
+    ----------------------------------------------------------------------------------------------------------------------------
     /*Module Telefonos*/
     PROCEDURE AD_Telefono(xidPersona IN NUMBER, xtelefono IN NUMBER) IS
     BEGIN
@@ -72,7 +73,7 @@ CREATE OR REPLACE PACKAGE BODY PC_PERSONA AS
                 ROLLBACK;
                 RAISE_APPLICATION_ERROR(-20208, 'No se pudo eliminar el telefono');
     END EL_Telefono;
-    
+    ----------------------------------------------------------------------------------------------------------------------------
     /*Module Clientes*/
     PROCEDURE AD_Cliente(xidPersona IN NUMBER, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito NUMBER) IS
     BEGIN
@@ -98,7 +99,7 @@ CREATE OR REPLACE PACKAGE BODY PC_PERSONA AS
                 ROLLBACK;
                 RAISE_APPLICATION_ERROR(-20210, 'No se pudo modificar el cliente');
     END MO_Cliente;
-
+    ----------------------------------------------------------------------------------------------------------------------------
     /*Module Empleados*/
     PROCEDURE AD_Empleado(xidPersona IN NUMBER, xsexo IN CHAR, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER) IS
     BEGIN
@@ -124,7 +125,7 @@ CREATE OR REPLACE PACKAGE BODY PC_PERSONA AS
                 ROLLBACK;
                 RAISE_APPLICATION_ERROR(-20212, 'No se pudo modificar el empleado');
     END MO_Empleado;
-
+    ----------------------------------------------------------------------------------------------------------------------------
     /*Module Consultas*/
     FUNCTION CO_Persona RETURN SYS_REFCURSOR IS v_cursor SYS_REFCURSOR;
     BEGIN
@@ -162,6 +163,7 @@ END PC_PERSONA;
 ----------------------------------------------------------------------------------------------------------------------------
 /*Module ventas*/
 CREATE OR REPLACE PACKAGE BODY PC_VENTAS AS
+    ----------------------------------------------------------------------------------------------------------------------------
     PROCEDURE AD_Venta(xidEmpleado IN NUMBER, xidCliente IN NUMBER, xdescripcionVenta IN VARCHAR, xestadoVenta IN CHAR) IS
     BEGIN
         
@@ -196,7 +198,7 @@ CREATE OR REPLACE PACKAGE BODY PC_VENTAS AS
                 ROLLBACK;
                 RAISE_APPLICATION_ERROR(-20215, 'No se pudo eliminar la venta');
     END EL_Venta;
-
+    ----------------------------------------------------------------------------------------------------------------------------
     PROCEDURE AD_DetalleVenta(xidVenta IN VARCHAR, xidProducto IN VARCHAR, xcantidad IN NUMBER, xprecioUnitario IN NUMBER) IS
     BEGIN
         INSERT INTO DetallesVentas(idDetalleVenta, idVenta, idProducto, cantidad, precioUnitario) 
@@ -218,8 +220,7 @@ CREATE OR REPLACE PACKAGE BODY PC_VENTAS AS
                 ROLLBACK;
                 RAISE_APPLICATION_ERROR(-20217, 'No se pudo eliminar el detalle de la venta');
     END EL_DetalleVenta;
-
-
+    ----------------------------------------------------------------------------------------------------------------------------
     FUNCTION CO_Venta RETURN SYS_REFCURSOR IS
         xcursor SYS_REFCURSOR;
     BEGIN
