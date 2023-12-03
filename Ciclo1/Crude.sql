@@ -1,14 +1,19 @@
 /*PACKAGE Personas*/
 CREATE OR REPLACE PACKAGE PC_PERSONA AS
+    --Persona
     PROCEDURE AD_Persona(xnombre IN VARCHAR, xapellidos IN VARCHAR, Xidentificacion IN NUMBER, XtipoIdentificacion IN CHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR);
     PROCEDURE MO_Persona(xidPersona IN NUMBER, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR);
     PROCEDURE EL_Persona(xidPersona IN NUMBER);
+    --Telefono
     PROCEDURE AD_Telefono(xidPersona IN NUMBER, xtelefono IN NUMBER);
     PROCEDURE EL_Telefono(xidPersona IN NUMBER, xtelefono IN NUMBER);
+    --Cliente
     PROCEDURE AD_Cliente(xidPersona IN NUMBER, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito NUMBER);
     PROCEDURE MO_Cliente(xidPersona IN NUMBER, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito NUMBER);
+    --Empleado
     PROCEDURE AD_Empleado(xidPersona IN NUMBER, xsexo IN CHAR, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER);
     PROCEDURE MO_Empleado(xidPersona IN NUMBER, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER);
+    --Consultas
     FUNCTION CO_Persona RETURN SYS_REFCURSOR;
     FUNCTION CO_TelefonoPersona RETURN SYS_REFCURSOR;
     FUNCTION CO_Cliente RETURN SYS_REFCURSOR;
@@ -17,11 +22,14 @@ END PC_PERSONA;
 /
 /*PACKAGE Ventas*/
 CREATE OR REPLACE PACKAGE PC_VENTAS AS
+    -- Venta
     PROCEDURE AD_Venta(xidEmpleado IN NUMBER, xidCliente IN NUMBER, xdescripcionVenta IN VARCHAR, xestadoVenta IN CHAR);
     PROCEDURE MO_Venta(xidVenta IN NUMBER, xdescripcionVenta IN VARCHAR, xestadoVenta IN CHAR);
     PROCEDURE EL_Venta(xidVenta IN NUMBER);
+    -- DetalleVenta
     PROCEDURE AD_DetalleVenta(xidVenta IN VARCHAR, xidProducto IN VARCHAR, xcantidad IN NUMBER, xprecioUnitario IN NUMBER);
     PROCEDURE EL_DetalleVenta(xidDetalleVenta IN VARCHAR);
+    -- Consultas
     FUNCTION CO_Venta RETURN SYS_REFCURSOR;
     FUNCTION CO_DetalleVenta RETURN SYS_REFCURSOR;
     FUNCTION CO_DetallesVentaEspecifico(xidVenta IN VARCHAR) RETURN SYS_REFCURSOR;
@@ -54,11 +62,23 @@ END PC_PRODUCTOS;
 /*PACKAGE Compras*/
 CREATE OR REPLACE PACKAGE PC_COMPRAS AS
     --Proveedor
-    PROCEDURE ADD_PROVEEDOR(xnombre IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xinformacionContacto IN VARCHAR);
-    PROCEDURE MO_PROVEEDOR(xidProveedor IN NUMBER, xnombre IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xinformacionContacto IN VARCHAR);
-    PROCEDURE EL_PROVEEDOR(xidProveedor IN NUMBER);
+    PROCEDURE AD_Proveedor(xnombre IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xinformacionContacto IN VARCHAR);
+    PROCEDURE MO_Proveedor(xidProveedor IN NUMBER, xnombre IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xinformacionContacto IN VARCHAR);
+    PROCEDURE EL_Proveedor(xidProveedor IN NUMBER);
+    --TelefonoProveedor
+    PROCEDURE AD_telefono(xidProveedor IN VARCHAR, xtelefono IN NUMBER);
+    PROCEDURE EL_telefono(xidProveedor IN VARCHAR, xtelefono IN NUMBER);
     --Compra
-    PROCEDURE AD_xidProveedor()
-
+    PROCEDURE AD_Compra(xidProveedor IN VARCHAR, xidEmpleado IN VARCHAR, xestadoCompra IN CHAR, xdescripcionCompra IN VARCHAR);
+    PROCEDURE MO_Compra(xidCompra IN VARCHAR, xestadoCompra IN CHAR, xdescripcionCompra IN VARCHAR);
+    PROCEDURE EL_Compra(xidCompra IN VARCHAR);
+    --Detalle Compra
+    PROCEDURE AD_DetalleCompra(xidCompra IN VARCHAR, xidProducto IN VARCHAR, xcantidad IN NUMBER, xprecioUnitario IN NUMBER);
+    PROCEDURE EL_DetalleCompra(xidDetalleCompra IN VARCHAR);
+    --Consultas
+    FUNCTION CO_Proveedor RETURN SYS_REFCURSOR;
+    FUNCTION CO_telefono RETURN SYS_REFCURSOR;
+    FUNCTION CO_Compras RETURN SYS_REFCURSOR;
+    FUNCTION CO_DetalleCompras RETURN SYS_REFCURSOR;
+    FUNCTION CO_DetallesCompraEspecifico(xidCompra IN VARCHAR) RETURN SYS_REFCURSOR;
 END PC_COMPRAS;
-/

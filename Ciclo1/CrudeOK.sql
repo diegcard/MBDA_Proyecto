@@ -194,3 +194,62 @@ BEGIN
     DBMS_SQL.RETURN_RESULT(CO_ProductosBajoStock);
 END;
 /
+
+/*Crude Compras*/
+
+-- Ejecutable PC.AD_Proveedor
+BEGIN
+    PC_COMPRAS.AD_Proveedor('Proveedor1', 'Dirección1', 'correo1@example.com', 'Contacto1');
+END;
+/
+
+-- Ejecutable PC.MO_Proveedor
+BEGIN
+    PC_COMPRAS.MO_Proveedor(1, 'Proveedor1', 'Nueva Dirección', 'nuevo_correo@example.com', 'Nuevo Contacto');
+END;
+/
+
+-- Ejecutable PC.EL_Proveedor
+BEGIN
+    PC_COMPRAS.EL_Proveedor(1);
+END;
+
+-- Ejecutable PC.AD_Compra
+BEGIN
+    PC_COMPRAS.AD_Compra(
+        xidProveedor=>'1',
+        xidEmpleado=>'2',
+        xestadoCompra=>'A',
+        xdescripcionCompra=>'Compra de repuestos'
+        );
+END;
+/
+-- Ejecutable PC.MO_Compra
+BEGIN
+    PC_COMPRAS.MO_Compra(
+        xidCompra=>1,
+        xestadoCompra=>'A',
+        xdescripcionCompra=>'Compra de repuestos'
+        );
+END;
+/
+-- Ejecutable PC.EL_Compra
+BEGIN
+    PC_COMPRAS.EL_Compra(1);
+END;
+/
+-- Ejecutable PC.AD_DetalleCompra
+BEGIN
+    PC_COMPRAS.AD_DetalleCompra(
+        xidCompra=>'1',
+        xidProducto=>'R8',
+        xcantidad=>5,
+        xprecioUnitario=>100000
+        );
+END;
+/
+-- Ejecutable PC.El_DetalleCompra
+BEGIN
+    PC_COMPRAS.EL_DetalleCompra(1);
+END;
+/

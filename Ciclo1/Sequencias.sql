@@ -22,12 +22,36 @@ MINVALUE 1
 NOCYCLE
 CACHE 10;
 
+-- Secuencia de idProveedor
+CREATE SEQUENCE SEQ_idProveedor
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+NOCYCLE
+CACHE 10;
+
+-- Secuencia de idCompra
+CREATE SEQUENCE SEQ_idCompra
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+NOCYCLE
+CACHE 10;
+
+-- Secuencia de idDetalleCompra
+CREATE SEQUENCE SEQ_idDetalleCompra
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+NOCYCLE
+CACHE 10;
 
 
 /*XSequence*/
 DROP SEQUENCE SEQ_idPersona;
 DROP SEQUENCE SEQ_idVenta;
 DROP SEQUENCE SEQ_idDetalleVenta;
+DROP SEQUENCE SEQ_idProveedor;
 
 -- Necestivo volver a iniciar la SEQ_idPersona en 1
 ALTER SEQUENCE SEQ_idPersona RESTART WITH 1;

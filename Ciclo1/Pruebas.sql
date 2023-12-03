@@ -1,105 +1,182 @@
-
-
-
-
-CREATE OR REPLACE PACKAGE PC_VENTAS AS
-    PROCEDURE AD_Venta(xidEmpleado IN NUMBER, xidCliente IN NUMBER, xdescripcionVenta IN VARCHAR, xestadoVenta IN CHAR);
-    PROCEDURE MO_Venta(xidVenta IN NUMBER, xdescripcionVenta IN VARCHAR, xestadoVenta IN CHAR);
-    PROCEDURE EL_Venta(xidVenta IN NUMBER);
-    PROCEDURE AD_DetalleVenta(xidVenta IN VARCHAR, xidProducto IN VARCHAR, xcantidad IN NUMBER, xprecioUnitario IN NUMBER);
-    PROCEDURE EL_DetalleVenta(xidDetalleVenta IN VARCHAR);
-    FUNCTION CO_Venta RETURN SYS_REFCURSOR;
-    FUNCTION CO_DetalleVenta RETURN SYS_REFCURSOR;
-    FUNCTION CO_DetallesVentaEspecifico(xidVenta IN VARCHAR) RETURN SYS_REFCURSOR;
-END PC_VENTAS;
+CREATE OR REPLACE PACKAGE PC_COMPRAS AS
+    --Proveedor
+    PROCEDURE AD_Proveedor(xnombre IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xinformacionContacto IN VARCHAR);
+    PROCEDURE MO_Proveedor(xidProveedor IN NUMBER, xnombre IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xinformacionContacto IN VARCHAR);
+    PROCEDURE EL_Proveedor(xidProveedor IN NUMBER);
+    --TelefonoProveedor
+    PROCEDURE AD_telefono(xidProveedor IN VARCHAR, xtelefono IN NUMBER);
+    PROCEDURE EL_telefono(xidProveedor IN VARCHAR, xtelefono IN NUMBER);
+    --Compra
+    PROCEDURE AD_Compra(idProveedor IN VARCHAR, idEmpleado IN VARCHAR, estadoCompra IN CHAR, descripcionCompra IN VARCHAR);
+    PROCEDURE MO_Compra(idCompra IN VARCHAR, estadoCompra IN CHAR, descripcionCompra IN VARCHAR);
+    PROCEDURE EL_Compra(idCompra IN VARCHAR);
+    --Detalle Compra
+    PROCEDURE AD_DetalleCompra(idCompra IN VARCHAR, idProducto IN VARCHAR, cantidad IN NUMBER, precioUnitario IN NUMBER);
+    PROCEDURE EL_DetalleCompra(idDetalleCompra IN VARCHAR);
+    --Consultas
+    FUNCTION CO_Proveedor RETURN SYS_REFCURSOR;
+    FUNCTION CO_telefono RETURN SYS_REFCURSOR;
+    FUNCTION CO_Compras RETURN SYS_REFCURSOR;
+    FUNCTION CO_DetalleCompras RETURN SYS_REFCURSOR;
+    FUNCTION CO_DetallesCompraEspecifico(xidCompra IN VARCHAR) RETURN SYS_REFCURSOR;
+END PC_COMPRAS;
 /
-
-
-CREATE OR REPLACE PACKAGE BODY PC_VENTAS AS
-    /*Module Venta*/
-    PROCEDURE AD_Venta(xidEmpleado IN NUMBER, xidCliente IN NUMBER, xdescripcionVenta IN VARCHAR, xestadoVenta IN CHAR) IS
+CREATE OR REPLACE PACKAGE BODY PC_COMPRAS AS
+    PROCEDURE AD_Proveedor(xnombre IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xinformacionContacto IN VARCHAR) IS
     BEGIN
-        
-        INSERT INTO Ventas(idVenta, idEmpleado, idCliente, descripcionVenta, estadoVenta) 
-        VALUES(SEQ_idVenta.NEXTVAL, xidEmpleado, xidCliente, xdescripcionVenta, xestadoVenta);
+        INSERT INTO Proveedores(idProveedor, nombre, direccion, correoElectronico, informacionContacto) 
+        VALUES(SEQ_idProveedor.NEXTVAL, xnombre, xdireccion, xcorreoElectronico, xinformacionContacto);
         COMMIT;
             EXCEPTION
             WHEN OTHERS THEN
                 ROLLBACK;
-                RAISE_APPLICATION_ERROR(-20213, 'No se pudo agregar la venta');
-    END AD_Venta;
+                RAISE_APPLICATION_ERROR(-20228, 'No se pudo agregar el proveedor');
+    END AD_Proveedor;
 
-    PROCEDURE MO_Venta(xidVenta IN NUMBER, xdescripcionVenta IN VARCHAR, xestadoVenta IN CHAR) IS
+    PROCEDURE MO_Proveedor(xidProveedor IN NUMBER, xnombre IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xinformacionContacto IN VARCHAR) IS
     BEGIN
-        UPDATE Ventas SET 
-        descripcionVenta = xdescripcionVenta, 
-        estadoVenta = xestadoVenta 
-        WHERE idVenta = xidVenta;
+        UPDATE Proveedores SET 
+        nombre = xnombre, 
+        direccion = xdireccion, 
+        correoElectronico = xcorreoElectronico, 
+        informacionContacto = xinformacionContacto 
+        WHERE idProveedor = xidProveedor;
         COMMIT;
             EXCEPTION
             WHEN OTHERS THEN
                 ROLLBACK;
-                RAISE_APPLICATION_ERROR(-20214, 'No se pudo modificar la venta');
-    END MO_Venta;
+                RAISE_APPLICATION_ERROR(-20229, 'No se pudo modificar el proveedor');
+    END MO_Proveedor;
 
-    PROCEDURE EL_Venta(xidVenta IN NUMBER) IS
+    PROCEDURE EL_Proveedor(xidProveedor IN NUMBER) IS
     BEGIN
-        DELETE FROM Ventas WHERE idVenta = xidVenta;
+        DELETE FROM Proveedores WHERE idProveedor = xidProveedor;
         COMMIT;
             EXCEPTION
             WHEN OTHERS THEN
                 ROLLBACK;
-                RAISE_APPLICATION_ERROR(-20215, 'No se pudo eliminar la venta');
-    END EL_Venta;
+                RAISE_APPLICATION_ERROR(-20230, 'No se pudo eliminar el proveedor');
+    END EL_Proveedor;
 
-    /*Module DetalleVenta*/
-    PROCEDURE AD_DetalleVenta(xidVenta IN VARCHAR, xidProducto IN VARCHAR, xcantidad IN NUMBER, xprecioUnitario IN NUMBER) IS
+    PROCEDURE AD_telefono(xidProveedor IN VARCHAR, xtelefono IN NUMBER) IS
     BEGIN
-        INSERT INTO DetallesVentas(idDetalleVenta, idVenta, idProducto, cantidad, precioUnitario) 
-        VALUES(SEQ_idDetalleVenta.NEXTVAL, xidVenta, xidProducto, xcantidad, xprecioUnitario);
+        INSERT INTO TelefonosProveedores(idProveedor, telefono) 
+        VALUES(xidProveedor, xtelefono);
         COMMIT;
             EXCEPTION
             WHEN OTHERS THEN
                 ROLLBACK;
-                RAISE_APPLICATION_ERROR(-20216, 'No se pudo agregar el detalle de la venta');
-    END AD_DetalleVenta;
+                RAISE_APPLICATION_ERROR(-20231, 'No se pudo agregar el telefono');
+    END AD_telefono;
 
-    PROCEDURE EL_DetalleVenta(xidDetalleVenta IN VARCHAR) IS
+    PROCEDURE EL_telefono(xidProveedor IN VARCHAR, xtelefono IN NUMBER) IS
     BEGIN
-        DELETE FROM DetallesVentas 
-        WHERE idDetalleVenta = xidDetalleVenta;
+        DELETE FROM TelefonosProveedores 
+        WHERE idProveedor = xidProveedor AND telefono = xtelefono;
         COMMIT;
             EXCEPTION
             WHEN OTHERS THEN
                 ROLLBACK;
-                RAISE_APPLICATION_ERROR(-20217, 'No se pudo eliminar el detalle de la venta');
-    END EL_DetalleVenta;
+                RAISE_APPLICATION_ERROR(-20232, 'No se pudo eliminar el telefono');
+    END EL_telefono;
 
-    /*Module Consultas*/
-
-    FUNCTION CO_Venta RETURN SYS_REFCURSOR IS
-        xcursor SYS_REFCURSOR;
+    PROCEDURE AD_Compra(idProveedor IN VARCHAR, idEmpleado IN VARCHAR, estadoCompra IN CHAR, descripcionCompra IN VARCHAR) IS
     BEGIN
-        OPEN xcursor FOR
-        SELECT * FROM Ventas;
-        RETURN xcursor;
-    END CO_Venta;
+        INSERT INTO Compras(idCompra, idProveedor, idEmpleado, estadoCompra, descripcionCompra) 
+        VALUES(SEQ_idCompra.NEXTVAL, idProveedor, idEmpleado, estadoCompra, descripcionCompra);
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20233, 'No se pudo agregar la compra');
+    END AD_Compra;
 
-    FUNCTION CO_DetalleVenta RETURN SYS_REFCURSOR IS
-        xcursor SYS_REFCURSOR;
+    PROCEDURE MO_Compra(idCompra IN VARCHAR, estadoCompra IN CHAR, descripcionCompra IN VARCHAR) IS
     BEGIN
-        OPEN xcursor FOR
-        SELECT * FROM DetallesVentas;
-        RETURN xcursor;
-    END CO_DetalleVenta;
+        UPDATE Compras SET 
+        estadoCompra = estadoCompra, 
+        descripcionCompra = descripcionCompra 
+        WHERE idCompra = idCompra;
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20234, 'No se pudo modificar la compra');
+    END MO_Compra;
 
-    FUNCTION CO_DetallesVentaEspecifico(xidVenta IN VARCHAR) RETURN SYS_REFCURSOR IS
-        xcursor SYS_REFCURSOR;
+    PROCEDURE EL_Compra(idCompra IN VARCHAR) IS
     BEGIN
-        OPEN xcursor FOR
-        SELECT * FROM DetallesVentas WHERE idVenta = xidVenta;
-        RETURN xcursor;
-    END CO_DetallesVentaEspecifico;
+        DELETE FROM Compras 
+        WHERE idCompra = idCompra;
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20235, 'No se pudo eliminar la compra');
+    END EL_Compra;
 
-END PC_VENTAS;
+    PROCEDURE AD_DetalleCompra(idCompra IN VARCHAR, idProducto IN VARCHAR, cantidad IN NUMBER, precioUnitario IN NUMBER) IS
+    BEGIN
+        INSERT INTO DetallesCompras(idDetalleCompra, idCompra, idProducto, cantidad, precioUnitario) 
+        VALUES(SEQ_idDetalleCompra.NEXTVAL, idCompra, idProducto, cantidad, precioUnitario);
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20236, 'No se pudo agregar el detalle de la compra');
+    END AD_DetalleCompra;
+
+    PROCEDURE EL_DetalleCompra(idDetalleCompra IN VARCHAR) IS
+    BEGIN
+        DELETE FROM DetallesCompras 
+        WHERE idDetalleCompra = idDetalleCompra;
+        COMMIT;
+            EXCEPTION
+            WHEN OTHERS THEN
+                ROLLBACK;
+                RAISE_APPLICATION_ERROR(-20237, 'No se pudo eliminar el detalle de la compra');
+    END EL_DetalleCompra;
+
+    FUNCTION CO_Proveedor RETURN SYS_REFCURSOR IS c_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN c_cursor FOR 
+            SELECT * 
+            FROM Proveedores;
+        RETURN c_cursor;
+    END CO_Proveedor;
+
+    FUNCTION CO_telefono RETURN SYS_REFCURSOR IS c_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN c_cursor FOR 
+            SELECT * 
+            FROM TelefonosProveedores;
+        RETURN c_cursor;
+    END CO_telefono;
+
+    FUNCTION CO_Compras RETURN SYS_REFCURSOR IS c_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN c_cursor FOR 
+            SELECT * 
+            FROM Compras;
+        RETURN c_cursor;
+    END CO_Compras;
+
+    FUNCTION CO_DetalleCompras RETURN SYS_REFCURSOR IS c_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN c_cursor FOR 
+            SELECT * 
+            FROM DetallesCompras;
+        RETURN c_cursor;
+    END CO_DetalleCompras;
+
+    FUNCTION CO_DetallesCompraEspecifico(xidCompra IN VARCHAR) RETURN SYS_REFCURSOR IS c_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN c_cursor FOR 
+            SELECT * 
+            FROM DetallesCompras 
+            WHERE idCompra = xidCompra;
+        RETURN c_cursor;
+    END CO_DetallesCompraEspecifico;
+
+END PC_COMPRAS;
 /

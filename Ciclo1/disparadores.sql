@@ -195,7 +195,7 @@ END;
 
 -- En la tabla Compras en el atributo totalCompra se calcula, sumando todos los DetallesCompras asociados a dicha compra
 CREATE OR REPLACE TRIGGER TR_DetallesCompras_AI_subtotal
-AFTER INSERT ON DetallesCompras
+AFTER INSERT OR DELETE ON DetallesCompras
 BEGIN
     UPDATE Compras v
     SET totalCompra = (SELECT SUM(d.subtotal)
