@@ -167,4 +167,3 @@ SELECT
 FROM Ventas v
     GROUP BY EXTRACT(MONTH FROM v.fechaVenta)
     ORDER BY EXTRACT(MONTH FROM v.fechaVenta) ASC;
-    

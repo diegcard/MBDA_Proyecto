@@ -7,7 +7,6 @@ DROP TRIGGER TR_DetallesVentas_totalVenta_BI;
 DROP TRIGGER TR_DetallesVentas_cantidad_recontar_AI;
 DROP TRIGGER TR_DeatllesVentas_AI_totalVenta;
 DROP TRIGGER TR_Ventas_Up_restric_Be;
-DROP TRIGGER TR_Productos_BI_Default;
 DROP TRIGGER TR_Compras_BI_Default;
 DROP TRIGGER TR_DetallesCompras_subtotal_BI;
 DROP TRIGGER TR_DetallesCompras_AI_subtotal;

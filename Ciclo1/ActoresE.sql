@@ -9,7 +9,7 @@ END PA_GERENTE;
 CREATE OR REPLACE PACKAGE PA_VENDEDOR AS
     --Personas
     FUNCTION CO_TelefonoPersona RETURN SYS_REFCURSOR;
-    FUNCTION CO_Cliente RETURN SYS_REFCURSOR;
+    FUNCTION CO_CLIENTE RETURN SYS_REFCURSOR;
     --Ventas
     PROCEDURE AD_Venta(xidEmpleado IN NUMBER, xidCliente IN NUMBER, xdescripcionVenta IN VARCHAR, xestadoVenta IN CHAR);
     PROCEDURE MO_Venta(xidVenta IN NUMBER, xdescripcionVenta IN VARCHAR, xestadoVenta IN CHAR);

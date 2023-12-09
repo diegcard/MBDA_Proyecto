@@ -52,6 +52,3 @@ DROP SEQUENCE SEQ_idPersona;
 DROP SEQUENCE SEQ_idVenta;
 DROP SEQUENCE SEQ_idDetalleVenta;
 DROP SEQUENCE SEQ_idProveedor;
-
--- Necestivo volver a iniciar la SEQ_idPersona en 1
-ALTER SEQUENCE SEQ_idPersona RESTART WITH 1;

@@ -12,6 +12,7 @@ CREATE OR REPLACE PACKAGE BODY PC_PERSONA AS
         ELSIF v_correoElectronico = 1 THEN
             RAISE_APPLICATION_ERROR(-20202, 'Ya existe una persona con ese correo electronico');
         ELSE 
+        --Poner en el trigger la secuencia
             INSERT INTO Personas(idPersona, nombre, apellidos, identificacion, tipoIdentificacion, dirrecion, correoElectronico)
             VALUES (SEQ_idPersona.NEXTVAL, xnombre, xapellidos, Xidentificacion, XtipoIdentificacion, xdireccion, xcorreoElectronico);
         END IF;
