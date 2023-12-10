@@ -1,10 +1,10 @@
 /*Me muestra la informacion de los empleados*/
 CREATE OR REPLACE VIEW infoEmpleados AS
 SELECT
-    P.identificacion AS "Identificacion",
+    P.idPersona AS "Identificacion",
     P.nombre AS "Nombre",
-    P.apellidos AS "apellido",
-    P.dirrecion AS direccion ,
+    P.apellido AS "apellido",
+    P.direccion AS "direccion",
     P.correoElectronico AS "Correo Electronico",
     E.sexo AS "Sexo",
     E.estadoCivil AS "Estado Civil",
@@ -69,10 +69,10 @@ JOIN
 /*Me muestra la informacion de los Clientes*/
 CREATE OR REPLACE VIEW infoClientes AS 
 SELECT 
-    p.identificacion AS "Identificacion",
+    p.idPersona AS "Identificacion",
     p.nombre AS "Nombre",
-    p.apellidos AS "apellidos",
-    p.dirrecion AS direccion,
+    p.apellido AS "apellidos",
+    p.direccion AS "direccion",
     p.correoElectronico AS "Correo Electronico",
     c.ocupacion AS "Ocupacion",
     c.ingresos AS "Ingresos"
@@ -104,7 +104,7 @@ FROM Productos p
 ORDER BY SUM(dv.cantidad) DESC
 FETCH FIRST 5 ROW ONLY;
 
-/*Muestra el CLiente con mayor Compras*/
+/*Muestra el CLiente con mayor Compras*/ 
 
 CREATE OR REPLACE VIEW ClientesConMayorCompras AS
 SELECT 

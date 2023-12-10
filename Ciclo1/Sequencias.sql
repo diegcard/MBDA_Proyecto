@@ -1,11 +1,3 @@
--- Secuencia de idPersona
-CREATE SEQUENCE SEQ_idPersona
-INCREMENT BY 1
-START WITH 1
-MINVALUE 1
-NOCYCLE
-CACHE 10;
-
 -- Secuencia de idVenta
 CREATE SEQUENCE SEQ_idVenta
 INCREMENT BY 1
@@ -48,7 +40,8 @@ CACHE 10;
 
 
 /*XSequence*/
-DROP SEQUENCE SEQ_idPersona;
 DROP SEQUENCE SEQ_idVenta;
 DROP SEQUENCE SEQ_idDetalleVenta;
 DROP SEQUENCE SEQ_idProveedor;
+DROP SEQUENCE SEQ_idCompra;
+DROP SEQUENCE SEQ_idDetalleCompra;

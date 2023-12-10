@@ -17,3 +17,5 @@ DROP VIEW EmpleadosConMayorVentas;
 DROP VIEW ProductoMasComprado;
 DROP VIEW ProveedorConMasCompras;
 DROP VIEW VentasPorMes;
+
+/*--------xXSquences-------------*/

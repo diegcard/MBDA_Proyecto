@@ -5,7 +5,7 @@ CREATE OR REPLACE TRIGGER TR_Personas_Ve_tipoIde
 BEFORE INSERT ON Personas
 FOR EACH ROW
 BEGIN
-    :NEW.tipoIdentificacion := UPPER(:NEW.tipoIdentificacion);
+  :NEW.tipoIdentificacion := UPPER(:NEW.tipoIdentificacion);
 END;
 /
 
@@ -15,19 +15,20 @@ CREATE OR REPLACE TRIGGER TR_Personas_Up_restric_Be
 BEFORE UPDATE ON Personas
 FOR EACH ROW
 BEGIN
-    IF :NEW.dirrecion IS NOT NULL OR :NEW.correoElectronico IS NOT NULL THEN
-        IF :NEW.dirrecion IS NOT NULL THEN
-            :OLD.dirrecion := :NEW.dirrecion;
-        END IF;
-
-        IF :NEW.correoElectronico IS NOT NULL THEN
-            :OLD.correoElectronico := :NEW.correoElectronico;
-        END IF;
-    ELSE
-        raise_application_error(-20001, 'No se puede modificar otras columnas aparte de la dirección y el correo electrónico.');
+  IF :NEW.direccion IS NOT NULL OR :NEW.correoElectronico IS NOT NULL THEN
+    IF :NEW.direccion IS NOT NULL AND :NEW.direccion <> :OLD.direccion THEN
+      raise_application_error(-20001, 'No se puede modificar la columna dirección.');
     END IF;
+
+    IF :NEW.correoElectronico IS NOT NULL AND :NEW.correoElectronico <> :OLD.correoElectronico THEN
+      raise_application_error(-20001, 'No se puede modificar la columna correo electrónico.');
+    END IF;
+  ELSE
+    raise_application_error(-20001, 'No se puede modificar otras columnas aparte de la dirección y el correo electrónico.');
+  END IF;
 END;
 /
+
 /*-----Eliminacion-----*/
 --Cuando se elimina una persona, se elimina de la tabla Clientes o Empleados tambien se eliminan los telefonos asociados con dicha persona
 

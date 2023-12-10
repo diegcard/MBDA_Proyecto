@@ -32,7 +32,6 @@ ALTER TABLE Compras ADD CONSTRAINT PK_Compras PRIMARY KEY(idCompra);
 
 /*----------UNIQUE KEYS----------*/
 -- Color Azul
-ALTER TABLE Personas ADD CONSTRAINT UK_Personas_Id_tId UNIQUE (identificacion, tipoIdentificacion);
 ALTER TABLE Personas ADD CONSTRAINT UK_Personas_correoElectronico UNIQUE (correoElectronico);
 
 -- Color Morado
@@ -41,7 +40,7 @@ ALTER TABLE Proveedores ADD CONSTRAINT UK_Proveedores_correoElectronico UNIQUE (
 
 /*----------Cheks----------*/
 -- Color Azul
-ALTER TABLE Personas ADD CONSTRAINT CK_Personas_identificacion CHECK (REGEXP_LIKE(identificacion, '^[0-9]+$'));
+ALTER TABLE Personas ADD CONSTRAINT CK_Personas_idPersona CHECK (REGEXP_LIKE(idPersona, '^[0-9]+$'));
 ALTER TABLE Personas ADD CONSTRAINT CK_Personas_tipoIdentificacion CHECK (tipoIdentificacion IN('C.C', 'T.I', 'C.E', 'P.P'));
 ALTER TABLE Personas ADD CONSTRAINT CK_Personas_Correo CHECK(correoElectronico LIKE '%@%');
 ALTER TABLE Empleados ADD CONSTRAINT CK_Empleados_Sex CHECK(sexo IN('H', 'M', 'O'));

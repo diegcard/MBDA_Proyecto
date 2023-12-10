@@ -8,11 +8,10 @@ Total de Atributos: 71
 
 CREATE TABLE Personas(
     idPersona NUMBER(11) NOT NULL,
+    tipoIdentificacion CHAR(5) NOT NULL,
     nombre VARCHAR2(20) NOT NULL,
     apellido VARCHAR2(20) NOT NULL,
-    identificacion NUMBER(20) NOT NULL,
-    tipoIdentificacion CHAR(5) NOT NULL,
-    dirrecion VARCHAR2(50) NULL,
+    direccion VARCHAR2(50) NULL,
     correoElectronico VARCHAR2(50) NOT NULL
 );
 

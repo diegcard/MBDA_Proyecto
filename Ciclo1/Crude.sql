@@ -1,25 +1,23 @@
 /*PACKAGE Personas*/
 CREATE OR REPLACE PACKAGE PC_PERSONA AS
-    --Persona
-    PROCEDURE AD_Persona(xnombre IN VARCHAR, xapellidos IN VARCHAR, Xidentificacion IN NUMBER, XtipoIdentificacion IN CHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR);
-    PROCEDURE MO_Persona(xidPersona IN NUMBER, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR);
-    PROCEDURE EL_Persona(xidPersona IN NUMBER);
+    --Cliente
+    PROCEDURE AD_Cliente(xidPersona IN NUMBER, xtipoIdentificacion IN CHAR, xnombre IN VARCHAR, xapellido IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito NUMBER);
+    PROCEDURE MO_Cliente(xidPersona IN NUMBER, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito NUMBER);
+    PROCEDURE EL_Cliente(xidPersona IN NUMBER);
+    --Empleado
+    PROCEDURE AD_Empleado(xidPersona IN NUMBER, xtipoIdentificacion IN CHAR, xnombre IN VARCHAR, xapellido IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xsexo IN CHAR, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER);
+    PROCEDURE MO_Empleado(xidPersona IN NUMBER, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER);
+    PROCEDURE EL_Empleado(xidPersona IN NUMBER);
     --Telefono
     PROCEDURE AD_Telefono(xidPersona IN NUMBER, xtelefono IN NUMBER);
     PROCEDURE EL_Telefono(xidPersona IN NUMBER, xtelefono IN NUMBER);
-    --Cliente
-    PROCEDURE AD_Cliente(xidPersona IN NUMBER, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito NUMBER);
-    PROCEDURE MO_Cliente(xidPersona IN NUMBER, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito NUMBER);
-    --Empleado
-    PROCEDURE AD_Empleado(xidPersona IN NUMBER, xsexo IN CHAR, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER);
-    PROCEDURE MO_Empleado(xidPersona IN NUMBER, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER);
     --Consultas
-    FUNCTION CO_Persona RETURN SYS_REFCURSOR;
     FUNCTION CO_TelefonoPersona RETURN SYS_REFCURSOR;
     FUNCTION CO_Cliente RETURN SYS_REFCURSOR;
     FUNCTION CO_Empleado RETURN SYS_REFCURSOR;
 END PC_PERSONA;
-/
+/ 
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 /*PACKAGE Ventas*/
 CREATE OR REPLACE PACKAGE PC_VENTAS AS

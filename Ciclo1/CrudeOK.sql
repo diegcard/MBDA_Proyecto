@@ -1,12 +1,41 @@
-SELECT * FROM Personas;
 
-SELECT * FROM Clientes;
-
-EXECUTE PC_PERSONA.AD_Persona('Hever', 'Barrera', 1000045114, 'C.C', 'Tocancipa Carrera 7 #4-3', 'Hever.Barrera@gmail.com');
-
-
+/*--------------------ModulePersonaOK------------------------------------*/
+/*Crude Clientes*/
 EXECUTE PC_PERSONA.AD_Cliente(3, 'Estudiante', 500000, 0);
 
+BEGIN
+    PC_PERSONA.AD_Cliente(
+        xidPersona => 1193116445,
+        xtipoIdentificacion => 'C.C',
+        xnombre => 'Hever',
+        xapellido => 'Barrera',
+        xdireccion => 'Tocancipa Carrera 7 #4-3',
+        xcorreoElectronico => 'hEVERBARRERA@GMAIL.COM',
+        xocupacion => 'Estudiante',
+        xingresos => 500000,
+        xhistorialCredito => 0
+    );
+END;
+/
+
+EXECUTE PC_PERSONA.AD_Cliente(52083589, 'C.C' ,'Cristina', 'Acosta', 'Calle 65 # 86-69', 'Cristina@gmail.com', 'Conductora',3200000, 560);
+
+
+BEGIN 
+    PC_PERSONA.El_Cliente(xidPersona=>1193116445);
+END;
+/
+
+
+DECLARE
+    CO_Client SYS_REFCURSOR;
+BEGIN
+    CO_Client := PC_PERSONA.CO_Cliente;
+    DBMS_SQL.RETURN_RESULT(CO_Client);
+END;
+/
+
+/*Crude Empleados */
 
 
 /*--------------------ModuleVentasOK------------------------------------*/
