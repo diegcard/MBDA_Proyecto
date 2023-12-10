@@ -39,6 +39,7 @@ CREATE OR REPLACE TRIGGER TR_Ventas_BI_Default
 BEFORE INSERT ON Ventas
 FOR EACH ROW
 BEGIN
+  :NEW.idVenta := SEQ_idVenta.NEXTVAL;
   :NEW.fechaVenta := systimestamp;  
   :NEW.totalVenta := 0;
   IF :NEW.estadoVenta IS NULL THEN
@@ -99,8 +100,9 @@ CREATE OR REPLACE TRIGGER TR_DetallesVentas_totalVenta_BI
 BEFORE INSERT ON DetallesVentas
 FOR EACH ROW
 DECLARE
-    total NUMBER(20,2) := :NEW.precioUnitario * :NEW.cantidad;
+  total NUMBER(20,2) := :NEW.precioUnitario * :NEW.cantidad;
 BEGIN
+  :NEW.idDetalleVenta := SEQ_idDetalleVenta.NEXTVAL;
   :NEW.precioTotal := total;
 END;
 /
@@ -130,17 +132,6 @@ END;
 
 /*-----Modificacion-----*/
 -- El unico dato que no se puede modificar es fechaVenta
-CREATE OR REPLACE TRIGGER TR_Ventas_Up_restric_Be
-BEFORE UPDATE ON Ventas
-FOR EACH ROW
-BEGIN
-  IF :NEW.fechaVenta IS NOT NULL THEN
-      :OLD.fechaVenta := :NEW.fechaVenta;
-  ELSE
-      raise_application_error(-20004, 'No se puede modificar la fecha de la venta.');
-  END IF;
-END;
-/
 
 /*-----Eliminacion-----*/
 --Cuando se elimina una venta se eliminan los detallesVentas asociados con dicha venta
@@ -154,14 +145,17 @@ BEFORE INSERT ON Productos
 FOR EACH ROW
 BEGIN
   IF :NEW.precio IS NULL THEN
-    :NEW.precio := 0;
+     :NEW.precio := 0;
   END IF;
 
   IF :NEW.estadoProducto IS NULL THEN
-    :NEW.estadoProducto := 0;
+     :NEW.estadoProducto := 'N';
   END IF;
 END;
 /
+
+--Desactivar el anterior disparador
+ALTER TRIGGER TR_Productos_BI_Default ENABLE;
 
 
 /*-----Modificacion-----*/
@@ -178,6 +172,7 @@ CREATE OR REPLACE TRIGGER TR_Compras_BI_Default
 BEFORE INSERT ON Compras
 FOR EACH ROW
 BEGIN
+  :NEW.idCompra := SEQ_idCompra.NEXTVAL;
   :NEW.fecha := SYSDATE;  
   :NEW.totalCompra := 0;
 END;
@@ -190,6 +185,7 @@ FOR EACH ROW
 DECLARE
     total NUMBER(20,2) := :NEW.precioUnitario * :NEW.cantidad;
 BEGIN
+    :NEW.idDetalleCompra := SEQ_idDetalleCompra.NEXTVAL;
     :NEW.subtotal := total;
 END;
 /
@@ -220,7 +216,14 @@ BEGIN
   WHERE P.idProducto = :NEW.idProducto;
 END;
 /
-
+--Proveedor
+CREATE OR REPLACE TRIGGER TR_PROVEEDOR_ID_AF_IN
+BEFORE INSERT ON Proveedores
+FOR EACH ROW
+BEGIN
+  :NEW.idProveedor := SEQ_idProveedor.NEXTVAL;
+END;
+/
 /*-----Modificacion-----*/
 -- No se pueden modificar las Compras
 /*-----Eliminacion-----*/

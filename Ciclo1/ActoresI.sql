@@ -152,56 +152,35 @@ END PA_VENDEDOR;
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE PACKAGE BODY PA_ADMINISTRADOR AS
     --------------------------------------------------------------------------------------------------------------------------------------------------------------
-    PROCEDURE AD_Persona(xnombre IN VARCHAR, xapellidos IN VARCHAR, Xidentificacion IN NUMBER, XtipoIdentificacion IN CHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR) IS
+    PROCEDURE AD_Cliente(xidPersona IN NUMBER, xtipoIdentificacion IN CHAR, xnombre IN VARCHAR, xapellido IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito IN NUMBER) IS
     BEGIN
-        PC_PERSONA.AD_Persona(xnombre, xapellidos, Xidentificacion, XtipoIdentificacion, xdireccion, xcorreoElectronico);
-    END AD_Persona;
-
-    PROCEDURE MO_Persona(xidPersona IN NUMBER, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR) IS
-    BEGIN
-        PC_PERSONA.MO_Persona(xidPersona, xdireccion, xcorreoElectronico);
-    END MO_Persona;
-
-    PROCEDURE EL_Persona(xidPersona IN NUMBER) IS
-    BEGIN
-        PC_PERSONA.EL_Persona(xidPersona);
-    END EL_Persona;
-
-    PROCEDURE AD_Telefono(xidPersona IN NUMBER, xtelefono IN NUMBER) IS
-    BEGIN
-        PC_PERSONA.AD_Telefono(xidPersona, xtelefono);
-    END AD_Telefono;
-
-    PROCEDURE EL_Telefono(xidPersona IN NUMBER, xtelefono IN NUMBER) IS
-    BEGIN
-        PC_PERSONA.EL_Telefono(xidPersona, xtelefono);
-    END EL_Telefono;
-
-    PROCEDURE AD_Cliente(xidPersona IN NUMBER, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito NUMBER) IS
-    BEGIN
-        PC_PERSONA.AD_Cliente(xidPersona, xocupacion, xingresos, xhistorialCredito);
+        PC_PERSONA.AD_Cliente(xidPersona, xtipoIdentificacion, xnombre, xapellido, xdireccion, xcorreoElectronico, xocupacion, xingresos, xhistorialCredito);
     END AD_Cliente;
 
-    PROCEDURE MO_Cliente(xidPersona IN NUMBER, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito NUMBER) IS
+    PROCEDURE MO_Cliente(xidPersona IN NUMBER, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito NUMBER) IS
     BEGIN
-        PC_PERSONA.MO_Cliente(xidPersona, xocupacion, xingresos, xhistorialCredito);
+        PC_PERSONA.MO_Cliente(xidPersona, xdireccion, xcorreoElectronico, xocupacion, xingresos, xhistorialCredito);
     END MO_Cliente;
 
-    PROCEDURE AD_Empleado(xidPersona IN NUMBER, xsexo IN CHAR, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER) IS
+    PROCEDURE EL_Cliente(xidPersona IN NUMBER) IS
     BEGIN
-        PC_PERSONA.AD_Empleado(xidPersona, xsexo, xestadoCivil, xcargo, xsalario);
+        PC_PERSONA.EL_Cliente(xidPersona);
+    END EL_Cliente;
+
+    PROCEDURE AD_Empleado(xidPersona IN NUMBER, xtipoIdentificacion IN CHAR, xnombre IN VARCHAR, xapellido IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xsexo IN CHAR, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER) IS
+    BEGIN
+        PC_PERSONA.AD_Empleado(xidPersona, xtipoIdentificacion, xnombre, xapellido, xdireccion, xcorreoElectronico, xsexo, xestadoCivil, xcargo, xsalario);
     END AD_Empleado;
 
-    PROCEDURE MO_Empleado(xidPersona IN NUMBER, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER) IS
+    PROCEDURE MO_Empleado(xidPersona IN NUMBER, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER) IS
     BEGIN
-        PC_PERSONA.MO_Empleado(xidPersona, xestadoCivil, xcargo, xsalario);
+        PC_PERSONA.MO_Empleado(xidPersona, xdireccion, xcorreoElectronico, xestadoCivil, xcargo, xsalario);
     END MO_Empleado;
 
-    FUNCTION CO_Persona RETURN SYS_REFCURSOR IS c_cursor SYS_REFCURSOR;
-    BEGIN 
-        c_cursor := PC_PERSONA.CO_Persona;
-        RETURN c_cursor;
-    END CO_Persona;
+    PROCEDURE EL_Empleado(xidPersona IN NUMBER) IS
+    BEGIN
+        PC_PERSONA.EL_Empleado(xidPersona);
+    END EL_Empleado;
 
     FUNCTION CO_TelefonoPersona RETURN SYS_REFCURSOR IS c_cursor SYS_REFCURSOR;
     BEGIN 
@@ -220,6 +199,7 @@ CREATE OR REPLACE PACKAGE BODY PA_ADMINISTRADOR AS
         c_cursor := PC_PERSONA.CO_Empleado;
         RETURN c_cursor;
     END CO_Empleado;
+
     --------------------------------------------------------------------------------------------------------------------------------------------------------------
     --Productos
     PROCEDURE AD_Repuestos(xidProducto IN VARCHAR, xnombre IN VARCHAR, xprecio IN NUMBER, xcantidadEnStock IN NUMBER, xtipoProducto IN CHAR, xestadoProducto IN CHAR, xtipoRepuesto IN VARCHAR, xdescripcion IN VARCHAR) IS
@@ -379,5 +359,6 @@ CREATE OR REPLACE PACKAGE BODY PA_ADMINISTRADOR AS
         c_cursor := PC_COMPRAS.CO_DetallesCompraEspecifico(xidCompra);
         RETURN c_cursor;
     END CO_DetallesCompraEspecifico;
+
 END PA_ADMINISTRADOR;
 /

@@ -155,8 +155,8 @@ CREATE OR REPLACE PACKAGE BODY PC_VENTAS AS
     ----------------------------------------------------------------------------------------------------------------------------
     PROCEDURE AD_Venta(xidEmpleado IN NUMBER, xidCliente IN NUMBER, xdescripcionVenta IN VARCHAR, xestadoVenta IN CHAR) IS
     BEGIN
-        INSERT INTO Ventas(idVenta, idEmpleado, idCliente, descripcionVenta, estadoVenta) 
-        VALUES(SEQ_idVenta.NEXTVAL, xidEmpleado, xidCliente, xdescripcionVenta, xestadoVenta);
+        INSERT INTO Ventas(idEmpleado, idCliente, descripcionVenta, estadoVenta) 
+        VALUES(xidEmpleado, xidCliente, xdescripcionVenta, xestadoVenta);
         COMMIT;
             EXCEPTION
             WHEN OTHERS THEN
@@ -189,8 +189,8 @@ CREATE OR REPLACE PACKAGE BODY PC_VENTAS AS
     ----------------------------------------------------------------------------------------------------------------------------
     PROCEDURE AD_DetalleVenta(xidVenta IN VARCHAR, xidProducto IN VARCHAR, xcantidad IN NUMBER, xprecioUnitario IN NUMBER) IS
     BEGIN
-        INSERT INTO DetallesVentas(idDetalleVenta, idVenta, idProducto, cantidad, precioUnitario) 
-        VALUES(SEQ_idDetalleVenta.NEXTVAL, xidVenta, xidProducto, xcantidad, xprecioUnitario);
+        INSERT INTO DetallesVentas(idVenta, idProducto, cantidad, precioUnitario) 
+        VALUES(xidVenta, xidProducto, xcantidad, xprecioUnitario);
         COMMIT;
             EXCEPTION
             WHEN OTHERS THEN
@@ -329,8 +329,8 @@ CREATE OR REPLACE PACKAGE BODY PC_PRODUCTOS AS
 
     PROCEDURE EL_Motos(xidProducto IN VARCHAR) IS
     BEGIN
-        DELETE FROM Productos 
-        WHERE idProducto = xidProducto;
+        DELETE FROM Motos WHERE idProducto = xidProducto;
+        DELETE FROM Productos WHERE idProducto = xidProducto;
         COMMIT;
             EXCEPTION
             WHEN OTHERS THEN
@@ -423,8 +423,8 @@ END PC_PRODUCTOS;
 CREATE OR REPLACE PACKAGE BODY PC_COMPRAS AS
     PROCEDURE AD_Proveedor(xnombre IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xinformacionContacto IN VARCHAR) IS
     BEGIN
-        INSERT INTO Proveedores(idProveedor, nombre, direccion, correoElectronico, informacionContacto) 
-        VALUES(SEQ_idProveedor.NEXTVAL, xnombre, xdireccion, xcorreoElectronico, xinformacionContacto);
+        INSERT INTO Proveedores(nombre, direccion, correoElectronico, informacionContacto) 
+        VALUES(xnombre, xdireccion, xcorreoElectronico, xinformacionContacto);
         COMMIT;
             EXCEPTION
             WHEN OTHERS THEN
@@ -486,8 +486,8 @@ CREATE OR REPLACE PACKAGE BODY PC_COMPRAS AS
 
     PROCEDURE AD_Compra(xidProveedor IN VARCHAR, xidEmpleado IN VARCHAR, xestadoCompra IN CHAR, xdescripcionCompra IN VARCHAR) IS
     BEGIN
-        INSERT INTO Compras(idCompra, idProveedor, idEmpleado, estadoCompra, descripcionCompra) 
-        VALUES(SEQ_idCompra.NEXTVAL, xidProveedor, xidEmpleado, xestadoCompra, xdescripcionCompra);
+        INSERT INTO Compras(idProveedor, idEmpleado, estadoCompra, descripcionCompra) 
+        VALUES(xidProveedor, xidEmpleado, xestadoCompra, xdescripcionCompra);
         COMMIT;
             EXCEPTION
             WHEN OTHERS THEN
@@ -523,8 +523,8 @@ CREATE OR REPLACE PACKAGE BODY PC_COMPRAS AS
 
     PROCEDURE AD_DetalleCompra(xidCompra IN VARCHAR, xidProducto IN VARCHAR, xcantidad IN NUMBER, xprecioUnitario IN NUMBER) IS
     BEGIN
-        INSERT INTO DetallesCompras(idDetalleCompra, idCompra, idProducto, cantidad, precioUnitario) 
-        VALUES(SEQ_idDetalleCompra.NEXTVAL, xidCompra, xidProducto, xcantidad, xprecioUnitario);
+        INSERT INTO DetallesCompras(idCompra, idProducto, cantidad, precioUnitario) 
+        VALUES(xidCompra, xidProducto, xcantidad, xprecioUnitario);
         COMMIT;
             EXCEPTION
             WHEN OTHERS THEN

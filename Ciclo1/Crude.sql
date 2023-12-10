@@ -2,11 +2,11 @@
 CREATE OR REPLACE PACKAGE PC_PERSONA AS
     --Cliente
     PROCEDURE AD_Cliente(xidPersona IN NUMBER, xtipoIdentificacion IN CHAR, xnombre IN VARCHAR, xapellido IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito NUMBER);
-    PROCEDURE MO_Cliente(xidPersona IN NUMBER, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito NUMBER);
+    PROCEDURE MO_Cliente(xidPersona IN NUMBER, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xocupacion IN VARCHAR, xingresos IN NUMBER, xhistorialCredito NUMBER);
     PROCEDURE EL_Cliente(xidPersona IN NUMBER);
     --Empleado
     PROCEDURE AD_Empleado(xidPersona IN NUMBER, xtipoIdentificacion IN CHAR, xnombre IN VARCHAR, xapellido IN VARCHAR, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xsexo IN CHAR, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER);
-    PROCEDURE MO_Empleado(xidPersona IN NUMBER, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER);
+    PROCEDURE MO_Empleado(xidPersona IN NUMBER, xdireccion IN VARCHAR, xcorreoElectronico IN VARCHAR, xestadoCivil IN CHAR, xcargo IN VARCHAR, xsalario IN NUMBER);
     PROCEDURE EL_Empleado(xidPersona IN NUMBER);
     --Telefono
     PROCEDURE AD_Telefono(xidPersona IN NUMBER, xtelefono IN NUMBER);
@@ -17,6 +17,7 @@ CREATE OR REPLACE PACKAGE PC_PERSONA AS
     FUNCTION CO_Empleado RETURN SYS_REFCURSOR;
 END PC_PERSONA;
 / 
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 /*PACKAGE Ventas*/

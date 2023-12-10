@@ -100,6 +100,10 @@ EXECUTE PC_PERSONA.AD_Cliente (1905760362, 'C.E', 'Anissa', 'Thraves', '383 Haye
 EXECUTE PC_PERSONA.AD_Cliente (8105126336, 'C.C', 'Hastings', 'Ranyard', '0357 Canary Junction', 'hranyard2p@hugedomains.com', 'cocinero', 2247785, 446);
 EXECUTE PC_PERSONA.AD_Cliente (2131955363, 'T.I', 'Dewitt', 'Jasiak', '21 Granby Parkway', 'djasiak2q@gmpg.org', 'artista', 9777680, 282);
 
+--Insert Telefonos Clientes
+EXECUTE PC_PERSONA.AD_Telefono (2131955363, 3147891234);
+EXECUTE PC_PERSONA.AD_Telefono (8105126336, 3508964589);
+
 --Insert Empleados
 EXECUTE PC_PERSONA.AD_Empleado (4185057482, 'C.C', 'Bliss', 'Cuesta', '9 Hanover Parkway', 'bcuesta0@army.mil', 'H', 'D', 'Administrador', 3595747);
 EXECUTE PC_PERSONA.AD_Empleado (2219724226, 'C.C', 'Agata', 'Duckinfield', '5 Arrowood Center', 'aduckinfield1@businesswire.com', 'H', 'D', 'Vendedor', 2489028);
@@ -112,7 +116,7 @@ EXECUTE PC_PERSONA.AD_Empleado (2606111723, 'T.I', 'Marsha', 'Hanbidge', '890 Bl
 EXECUTE PC_PERSONA.AD_Empleado (9609553542, 'C.E', 'Caresse', 'Watt', '826 Nancy Center', 'cwatt8@g.co', 'O', 'U', 'Vendedor', 3171756);
 EXECUTE PC_PERSONA.AD_Empleado (9399649981, 'C.C', 'Ardelis', 'Gossage', '847 Charing Cross Road', 'agossage9@geocities.jp', 'H', 'U', 'Macanico', 4820509);
 
---Inser Telefonos Empleados
+--Insert Telefonos Empleados
 EXECUTE PC_PERSONA.AD_Telefono (4185057482, 314569745);
 EXECUTE PC_PERSONA.AD_Telefono (2219724226, 3145897487);
 EXECUTE PC_PERSONA.AD_Telefono (6001040089, 3149878958);
@@ -123,4 +127,199 @@ EXECUTE PC_PERSONA.AD_Telefono (8685474133, 3568968745);
 EXECUTE PC_PERSONA.AD_Telefono (2606111723, 3106981234);
 EXECUTE PC_PERSONA.AD_Telefono (9609553542, 3145879632);
 EXECUTE PC_PERSONA.AD_Telefono (9399649981, 3145691234);
+
+--Insert Proveedores
+EXECUTE PC_COMPRAS.AD_Proveedor ('HONDA', 'CARRERA 7 # 89-69', 'VENTASHONDA@HONDA.COM', 'Carlos Arturo Telefono: 31458964785');
+EXECUTE PC_COMPRAS.AD_Proveedor ('BMW', 'CARRERA 14 # 89-17', 'VENTASBMW@BMW.COM', 'Carlos Julio Telefono: 3145691234');
+EXECUTE PC_COMPRAS.AD_Proveedor ('DUCATI', 'CALLE 14 # 89-39', 'VENTASDUCATI@DUCATI.COM', 'Alfonso Julio Telefono: 3106981234');
+EXECUTE PC_COMPRAS.AD_Proveedor ('HERO MOTOS', 'CALLE 14 # 90-69', 'VENTASHERO@HERO.COM', 'Julio Telefono: 3145896985');
+EXECUTE PC_COMPRAS.AD_Proveedor ('KAWASAKI', 'CALLE 1 # 90-9', 'VENTASKAWASAKI@KAWASAKI.COM', 'Marcos Telefono: 3105896985');
+EXECUTE PC_COMPRAS.AD_Proveedor ('PULSAR', 'CALLE 41 # 90-12', 'VENTASPULSAR@PULSAR.COM', 'Marcos Telefono: 3105698775');
+EXECUTE PC_COMPRAS.AD_Proveedor ('SUZUKI', 'CALLE 41 # 90-47', 'VENTASSUZUKI@SUZUKI.COM', 'Cristina Ramirez Telefono: 3101698745');
+EXECUTE PC_COMPRAS.AD_Proveedor ('YAMAHA', 'CALLE 80 # 97-65', 'VENTASYAMAHA@YAMAHA.COM', 'Cristina Ramirez Telefono: 31055698745');
+EXECUTE PC_COMPRAS.AD_Proveedor ('CF MOTO', 'CALLE 80 # 97-65', 'VENTASCF@CF.COM', 'Cristina Cortes Telefono: 3105598745');
+EXECUTE PC_COMPRAS.AD_Proveedor ('HARLEY DAVIDSON', 'CALLE 80 # 97-65', 'VENTASHARLEY@HARLEY.COM', 'Cristina Tarazona Telefono: 3005598745');
+EXECUTE PC_COMPRAS.AD_Proveedor ('BENELLI', 'CALLE 80 # 97-65', 'VENTASBENELLI@BENELLI.COM', 'Cristina Tarazona Telefono: 3005598745');
+
+--Insert Telefonos Proveedores
+EXECUTE PC_COMPRAS.AD_telefono (1, 31458964785);
+EXECUTE PC_COMPRAS.AD_telefono (2, 3145691234);
+EXECUTE PC_COMPRAS.AD_telefono (3, 3106981234);
+EXECUTE PC_COMPRAS.AD_telefono (4, 3145896985);
+EXECUTE PC_COMPRAS.AD_telefono (5, 3105896985);
+EXECUTE PC_COMPRAS.AD_telefono (6, 31458964785);
+EXECUTE PC_COMPRAS.AD_telefono (7, 3101698745);
+EXECUTE PC_COMPRAS.AD_telefono (8, 3105598745);
+EXECUTE PC_COMPRAS.AD_telefono (9, 3005598745);
+EXECUTE PC_COMPRAS.AD_telefono (10, 3005598745);
+
+--Insert Repuestos
+EXECUTE PC_PRODUCTOS.AD_Repuestos('R1','Llanta Honda XR 150L',250000, 0, 'R', 'D', 'Llanta', 'Llanta para moto Honda XR 150L');
+EXECUTE PC_PRODUCTOS.AD_Repuestos('R2','Llanta BMW G 310 R',169000, 0, 'R', 'D', 'Llanta', 'Llanta para moto BMW G 310 R');
+EXECUTE PC_PRODUCTOS.AD_Repuestos('R3','Llanta Ducati Monster 797',560000, 0, 'R', 'D', 'Llanta', 'Llanta para moto Ducati Monster 797');
+EXECUTE PC_PRODUCTOS.AD_Repuestos('R4','Llanta Hero Motocorp Passion Pro',980000, 0, 'R', 'D', 'Llanta', 'Llanta para moto Hero Motocorp Passion Pro');
+EXECUTE PC_PRODUCTOS.AD_Repuestos('R5','Llanta para moto Kawasaki Ninja 300',350000, 0, 'R', 'D', 'Llanta', 'Llanta para moto Kawasaki Ninja 300');
+EXECUTE PC_PRODUCTOS.AD_Repuestos('R6','Llanta para moto Pulsar NS 200',240000, 0, 'R', 'D', 'Llanta', 'Llanta para moto Pulsar NS 200');
+EXECUTE PC_PRODUCTOS.AD_Repuestos('R7','Llanta para moto Suzuki Gixxer SF',458000, 0, 'R', 'D', 'Llanta', 'Llanta para moto Suzuki Gixxer SF');
+EXECUTE PC_PRODUCTOS.AD_Repuestos('R8','Llanta para moto Yamaha FZ25',499000, 0, 'R', 'D', 'Llanta', 'Llanta para moto Yamaha FZ25');
+EXECUTE PC_PRODUCTOS.AD_Repuestos('R9','Llanta para moto CF Moto 400 NK',1250000, 0, 'R', 'D', 'Llanta', 'Llanta para moto CF Moto 400 NK');
+EXECUTE PC_PRODUCTOS.AD_Repuestos('R10','Llanta para moto Harley Davidson Street 750',2600000, 0, 'R', 'D', 'Llanta', 'Llanta para moto Harley Davidson Street 750');
+
+-- Insert Motos
+EXECUTE PC_PRODUCTOS.AD_Motos('M1', 'Honda XR 150L', 7500000, 0, 'M', 'D', 'Honda', 'XR 150L', TO_DATE('2019-01-01', 'YYYY-MM-DD'), 'Rojo', '150', 'Moto Honda XR 150L');
+EXECUTE PC_PRODUCTOS.AD_Motos('M2', 'BMW G 310 R', 25000000, 0, 'M', 'D', 'BMW', 'G 310 R', TO_DATE('2023-01-01', 'YYYY-MM-DD'), 'Rojo', '310', 'Moto BMW G 310 R');
+EXECUTE PC_PRODUCTOS.AD_Motos('M3', 'Ducati Monster 797', 78000000, 0, 'M', 'D', 'Ducati', 'Monster 797', TO_DATE('2022-01-01', 'YYYY-MM-DD'), 'Rojo', '797', 'Moto Ducati Monster 797');
+EXECUTE PC_PRODUCTOS.AD_Motos('M4', 'Hero Motocorp Passion Pro', 32000000, 0, 'M', 'D', 'Hero Motocorp', 'Passion Pro', TO_DATE('2021-01-01', 'YYYY-MM-DD'), 'Rojo', '150', 'Moto Hero Motocorp Passion Pro');
+EXECUTE PC_PRODUCTOS.AD_Motos('M5', 'Kawasaki Ninja 300', 14000000, 0, 'M', 'D', 'Kawasaki', 'Ninja 300', TO_DATE('2020-01-01', 'YYYY-MM-DD'), 'Rojo', '300', 'Moto Kawasaki Ninja 300');
+EXECUTE PC_PRODUCTOS.AD_Motos('M6', 'Pulsar NS 200', 12000000, 0, 'M', 'D', 'Pulsar', 'NS 200', TO_DATE('2020-01-01', 'YYYY-MM-DD'), 'Rojo', '200', 'Moto Pulsar NS 200');
+EXECUTE PC_PRODUCTOS.AD_Motos('M7', 'Suzuki Gixxer SF', 15000000, 0, 'M', 'D', 'Suzuki', 'Gixxer SF', TO_DATE('2022-01-01', 'YYYY-MM-DD'), 'Rojo', '150', 'Moto Suzuki Gixxer SF');
+EXECUTE PC_PRODUCTOS.AD_Motos('M8', 'Yamaha FZ25', 15900000, 0, 'M', 'D', 'Yamaha', 'FZ25', TO_DATE('2018-01-01', 'YYYY-MM-DD'), 'Rojo', '250', 'Moto Yamaha FZ25');
+EXECUTE PC_PRODUCTOS.AD_Motos('M9', 'CF Moto 400 NK', 45000000, 0, 'M', 'D', 'CF Moto', '400 NK', TO_DATE('2019-01-01', 'YYYY-MM-DD'), 'Rojo', '400', 'Moto CF Moto 400 NK');
+EXECUTE PC_PRODUCTOS.AD_Motos('M10', 'Harley Davidson Street 750', 49000000, 0, 'M', 'D', 'Harley Davidson', 'Street 750', TO_DATE('2023-01-01', 'YYYY-MM-DD'), 'Rojo', '750', 'Moto Harley Davidson Street 750');
+
+-- Insert Accesorios
+EXECUTE PC_PRODUCTOS.AD_Accesorios('A1', 'Casco Honda XR 150L', 250000, 0, 'A', 'D', 'Casco para moto Honda XR 150L');
+EXECUTE PC_PRODUCTOS.AD_Accesorios('A2', 'Casco BMW G 310 R', 169000, 0, 'A', 'D', 'Casco para moto BMW G 310 R');
+EXECUTE PC_PRODUCTOS.AD_Accesorios('A3', 'Casco Ducati Monster 797', 560000, 0, 'A', 'D', 'Casco para moto Ducati Monster 797');
+EXECUTE PC_PRODUCTOS.AD_Accesorios('A4', 'Casco Hero Motocorp Passion Pro', 980000, 0, 'A', 'D', 'Casco para moto Hero Motocorp Passion Pro');
+EXECUTE PC_PRODUCTOS.AD_Accesorios('A5', 'Casco para moto Kawasaki Ninja 300', 350000, 0, 'A', 'D', 'Casco para moto Kawasaki Ninja 300');
+EXECUTE PC_PRODUCTOS.AD_Accesorios('A6', 'Casco para moto Pulsar NS 200', 240000, 0, 'A', 'D', 'Casco para moto Pulsar NS 200');
+EXECUTE PC_PRODUCTOS.AD_Accesorios('A7', 'Casco para moto Suzuki Gixxer SF', 458000, 0, 'A', 'D', 'Casco para moto Suzuki Gixxer SF');
+EXECUTE PC_PRODUCTOS.AD_Accesorios('A8', 'Casco para moto Yamaha FZ25', 499000, 0, 'A', 'D', 'Casco para moto Yamaha FZ25');
+EXECUTE PC_PRODUCTOS.AD_Accesorios('A9', 'Casco para moto CF Moto 400 NK', 1250000, 0, 'A', 'D', 'A para moto CF Moto 400 NK');
+EXECUTE PC_PRODUCTOS.AD_Accesorios('A10', 'Casco para moto Harley Davidson Street 750', 2600000, 0, 'A', 'D', 'Casco para moto Harley Davidson Street 750');
+
+--Insert Compras
+--Se separan por porcedimientos para que no se ejecute todo el script de una vez
+
+--Compra Repuesots
+
+BEGIN
+    --Compra
+    PC_COMPRAS.AD_Compra(1, 4185057482, 'A', 'Compra de repuestos bajo cilindraje');
+    --DetallesComptas
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'R1', 8, 250000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'R7', 2, 458000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'R10', 3, 2600000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'R4', 4, 980000);
+END;
+/
+
+BEGIN
+    --Compra
+    PC_COMPRAS.AD_Compra(2, 9609553542, 'A', 'Compra de Repuestos Alto cilindraje');
+    --DetallesComptas
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'R2', 8, 169000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'R3', 8, 560000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'R4', 8, 980000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'R5', 4, 350000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'R6', 2, 240000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'R9', 3, 1250000);
+END;
+/
+
+--Compra motos
+
+BEGIN
+    --Compra
+    PC_COMPRAS.AD_Compra(3, 2219724226, 'A', 'Compra de Motos');
+    --DetallesComptas
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'M1', 5, 7500000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'M2', 4, 25000000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'M3', 6, 78000000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'M4', 8, 32000000);
+END;
+/
+
+BEGIN
+    --Compra
+    PC_COMPRAS.AD_Compra(4, 6001040089, 'A', 'Compra de Motos Gran cantidad');
+    --DetallesComptas
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'M5', 5, 14000000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'M6', 10, 12000000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'M7', 6, 15000000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'M8', 8, 15900000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'M9', 8, 45000000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'M10', 8, 49000000);
+END;
+/
+
+-- Compra Accesorios
+
+BEGIN
+    --Compra
+    PC_COMPRAS.AD_Compra(5, 4185057482, 'A', 'Compra de Accesorios');
+    --DetallesComptas
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'A1', 8, 250000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'A7', 2, 458000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'A10', 3, 2600000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'A4', 4, 980000);
+END;
+/
+
+BEGIN
+    --Compra
+    PC_COMPRAS.AD_Compra(6, 9609553542, 'A', 'Compra de Accesorios Alto cilindraje');
+    --DetallesComptas
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'A2', 8, 169000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'A3', 8, 560000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'A4', 8, 980000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'A5', 4, 350000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'A6', 2, 240000);
+    PC_COMPRAS.AD_DetalleCompra(SEQ_idCompra.CURRVAL, 'A9', 3, 1250000);
+END;
+/
+
+--Insert Ventas
+
+--Venta Repuestos
+
+BEGIN
+    --Venta
+    PC_VENTAS.AD_Venta(4185057482, 5587740841, 'Venta de repuestos bajo cilindraje', 'A');
+    --DetallesVentas
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'R1', 4, 250000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'R7', 2, 458000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'R10', 3, 2600000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'R4', 4, 980000);
+END;
+/
+
+BEGIN
+    --Venta
+    PC_VENTAS.AD_Venta(9609553542, 6375787339, 'Venta de Repuestos Alto cilindraje', 'A');
+    --DetallesVentas
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'R2', 8, 169000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'R3', 8, 560000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'R4', 8, 980000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'R5', 4, 350000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'R6', 2, 240000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'R9', 3, 1250000);
+END;
+
+--Venta motos
+
+BEGIN
+    --Venta
+    PC_VENTAS.AD_Venta(6001040089, 3484889862, 'Venta de Motos', 'A');
+    --DetallesVentas
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'M1', 3, 7500000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'M2', 2, 25000000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'M3', 2, 78000000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'M4', 4, 32000000);
+END;
+/
+
+BEGIN
+    --Venta
+    PC_VENTAS.AD_Venta(6001040089, 5017491644, 'Venta de Motos Gran cantidad', 'A');
+    --DetallesVentas
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'M5', 5, 14000000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'M6', 10, 12000000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'M7', 6, 15000000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'M8', 8, 15900000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'M9', 8, 45000000);
+    PC_VENTAS.AD_DetalleVenta(SEQ_idVenta.CURRVAL, 'M10', 8, 49000000);
+END;
+/
 
