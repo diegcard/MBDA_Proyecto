@@ -1,10 +1,6 @@
 /*----------Tablas----------*/
-/*
-Comentarios:
-Total de Tablas: 14
-Total de Atributos: 71
-*/
--- Color Azul
+
+-- Maneter Personas
 
 CREATE TABLE Personas(
     idPersona NUMBER(11) NOT NULL,
@@ -35,7 +31,7 @@ CREATE TABLE Empleados(
     salario NUMBER(20,2) NOT NULL
 );
 
--- Color Verde
+-- Maneter Ventas
 
 CREATE TABLE Ventas(
     idVenta NUMBER(20) NOT NULL,
@@ -56,7 +52,7 @@ CREATE TABLE DetallesVentas(
     precioTotal NUMBER(20,2) NULL
 );
 
--- Color Naranja
+-- Maneter Productos
 
 CREATE TABLE Productos(
     idProducto VARCHAR2(10) NOT NULL,
@@ -88,7 +84,7 @@ CREATE TABLE Accesorios(
     descripcion VARCHAR(200) NULL
 );
 
--- Color Morado
+-- Mantener Compras
 
 CREATE TABLE DetallesCompras(
     idDetalleCompra NUMBER(10) NOT NULL,

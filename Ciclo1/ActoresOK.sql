@@ -30,7 +30,7 @@ BEGIN
     v_cursor := PA_GERENTE.CO_VentasMes;
     DBMS_SQL.RETURN_RESULT(v_cursor);
 END;
-
+/
 
 /*ActoresOK PACKAGE Vendedor*/
 --CO_TelefonoPersona

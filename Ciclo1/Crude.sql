@@ -18,7 +18,6 @@ CREATE OR REPLACE PACKAGE PC_PERSONA AS
 END PC_PERSONA;
 / 
 
-
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 /*PACKAGE Ventas*/
 CREATE OR REPLACE PACKAGE PC_VENTAS AS
@@ -81,3 +80,4 @@ CREATE OR REPLACE PACKAGE PC_COMPRAS AS
     FUNCTION CO_DetalleCompras RETURN SYS_REFCURSOR;
     FUNCTION CO_DetallesCompraEspecifico(xidCompra IN VARCHAR) RETURN SYS_REFCURSOR;
 END PC_COMPRAS;
+/
